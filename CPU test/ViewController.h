@@ -26,5 +26,14 @@
 
 
 @interface ViewController : UIViewController
+{
+    int areaCode ;
+    NSString *lang;
+    NSString* region;
+    NSString* imageName;
+    UIScrollView *mainScrollView;
+
+}
+
 @end
 
