@@ -24,6 +24,7 @@ extern "C" {
 }
 #endif
 
+static CFStringRef (*$MGCopyAnswer)(CFStringRef);
 
 @implementation ViewController
 
@@ -57,10 +58,9 @@ extern "C" {
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:mainScrollView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:mainScrollView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view  attribute:NSLayoutAttributeHeight multiplier:1.0 constant:-adH]];
     
-    CFStringRef val = (CFStringRef)MGCopyAnswer(CFSTR("HardwarePlatform"));
-    NSString* chipIdentifier =(__bridge NSString * _Nullable)(val);
-    
-    CFStringRef boardID = MGCopyAnswer(kMGHardwarePlatform);
+    void *gestalt = dlopen("/usr/lib/libMobileGestalt.dylib", RTLD_GLOBAL | RTLD_LAZY);
+    $MGCopyAnswer = dlsym(gestalt, "MGCopyAnswer");
+    CFStringRef boardID = (CFStringRef)$MGCopyAnswer(CFSTR("HardwarePlatform"));
     UILabel* boardIDLabel = [[UILabel alloc] init];
     UILabel* addition = [[UILabel alloc] init];
     

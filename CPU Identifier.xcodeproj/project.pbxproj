@@ -26,7 +26,6 @@
 		4EB000CC1BB9502800054208 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4EB000CA1BB9502800054208 /* LaunchScreen.storyboard */; };
 		4EB000D71BB9502800054208 /* CPU_testTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB000D61BB9502800054208 /* CPU_testTests.m */; };
 		4EB000E21BB9502800054208 /* CPU_testUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB000E11BB9502800054208 /* CPU_testUITests.m */; };
-		4EEB291D1BBB9C5C006EB7DB /* libMobileGestalt.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EEB291C1BBB9C5C006EB7DB /* libMobileGestalt.tbd */; settings = {ASSET_TAGS = (); }; };
 		4EEB29321BBBA27B006EB7DB /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EEB29201BBBA27B006EB7DB /* AFHTTPRequestOperation.m */; settings = {ASSET_TAGS = (); }; };
 		4EEB29331BBBA27B006EB7DB /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EEB29221BBBA27B006EB7DB /* AFHTTPRequestOperationManager.m */; settings = {ASSET_TAGS = (); }; };
 		4EEB29341BBBA27B006EB7DB /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EEB29241BBBA27B006EB7DB /* AFHTTPSessionManager.m */; settings = {ASSET_TAGS = (); }; };
@@ -85,7 +84,6 @@
 		4EB000DD1BB9502800054208 /* CPU Identifier.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CPU Identifier.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EB000E11BB9502800054208 /* CPU_testUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CPU_testUITests.m; sourceTree = "<group>"; };
 		4EB000E31BB9502800054208 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4EEB291C1BBB9C5C006EB7DB /* libMobileGestalt.tbd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.text-based-dylib-definition"; path = libMobileGestalt.tbd; sourceTree = "<group>"; };
 		4EEB291F1BBBA27B006EB7DB /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFHTTPRequestOperation.h; path = AFNetWorking/AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		4EEB29201BBBA27B006EB7DB /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFHTTPRequestOperation.m; path = AFNetWorking/AFHTTPRequestOperation.m; sourceTree = "<group>"; };
 		4EEB29211BBBA27B006EB7DB /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFHTTPRequestOperationManager.h; path = AFNetWorking/AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
@@ -114,7 +112,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E71C36A1BB98507002B0FF1 /* UIKit.framework in Frameworks */,
-				4EEB291D1BBB9C5C006EB7DB /* libMobileGestalt.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -205,7 +202,6 @@
 		4EB000BC1BB9502800054208 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				4EEB291C1BBB9C5C006EB7DB /* libMobileGestalt.tbd */,
 				4EB000BD1BB9502800054208 /* main.m */,
 			);
 			name = "Supporting Files";
