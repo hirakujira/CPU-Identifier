@@ -13,30 +13,10 @@
 #include <dlfcn.h>
 #import "MobileGestalt.h"
 #import "AppDelegate.h"
-#import "AFNetworking.h"
-
-@import AdSupport;
-#if __cplusplus
-extern "C" {
-#endif
-    CFPropertyListRef MGCopyAnswer(CFStringRef property);
-#if __cplusplus
-}
-#endif
 
 static CFStringRef (*$MGCopyAnswer)(CFStringRef);
 
 @implementation ViewController
-
-- (NSString *)platformString {
-    size_t size;
-    sysctlbyname("hw.machine", NULL, &size, NULL, 0);
-    char *model = (char*)malloc(size);
-    sysctlbyname("hw.machine", model, &size, NULL, 0);
-    NSString *sDeviceModel = [NSString stringWithCString:model encoding:NSUTF8StringEncoding];
-    free(model);
-    return sDeviceModel;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -62,22 +42,21 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     $MGCopyAnswer = dlsym(gestalt, "MGCopyAnswer");
     CFStringRef boardID = (CFStringRef)$MGCopyAnswer(CFSTR("HardwarePlatform"));
     UILabel* boardIDLabel = [[UILabel alloc] init];
-    UILabel* addition = [[UILabel alloc] init];
+    UILabel* manufactory = [[UILabel alloc] init];
     
     boardIDLabel.text = (__bridge NSString *)boardID;
     BOOL isA9 = NO;
-    addition.text = @"";
+    manufactory.text = @"";
     if ([(__bridge NSString *)boardID isEqualToString:@"s8000"]) {
-        addition.text = @"Samsung";
+        manufactory.text = @"Samsung";
         isA9 = YES;
         imageName = @"A9";
     }
     if ([(__bridge NSString *)boardID isEqualToString:@"s8003"]) {
-        addition.text = @"TSMC";
+        manufactory.text = @"TSMC";
         isA9 = YES;
         imageName = @"A9";
     }
-
     
     NSString* str2Cmp = [(__bridge NSString *)boardID lowercaseString];
     if ([str2Cmp hasPrefix:@"s5l8960"] || [str2Cmp hasPrefix:@"s5l8965"]){
@@ -98,50 +77,45 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
         imageName = @"A4";
     }
     
-    //    [mainScrollView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [boardIDLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [addition setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [manufactory setTranslatesAutoresizingMaskIntoConstraints:NO];
     [boardIDLabel setFont:[UIFont systemFontOfSize:36]];
-    //    [boardIDLabel.text]
     [mainScrollView addSubview:boardIDLabel];
-    [mainScrollView addSubview:addition];
+    [mainScrollView addSubview:manufactory];
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:boardIDLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:boardIDLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:-upperOffset]];
-    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:addition attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
-    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:addition attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:50-upperOffset]];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:manufactory attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:manufactory attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:50-upperOffset]];
     
     //Add chip icon
     UIImageView *imgView = [[UIImageView alloc] init];
-    if(imageName)
+    if(imageName) {
         imgView.image = [UIImage imageNamed:imageName];
-    imgView.backgroundColor = [UIColor clearColor];
-    imgView.contentMode = UIViewContentModeScaleAspectFit;
-    [mainScrollView addSubview: imgView];
-    [imgView setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [mainScrollView  addConstraint:[NSLayoutConstraint constraintWithItem:imgView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:mainScrollView  attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
-    [mainScrollView  addConstraint:[NSLayoutConstraint constraintWithItem:imgView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:mainScrollView  attribute:NSLayoutAttributeWidth multiplier:0.4 constant:0]];
-    [mainScrollView  addConstraint:[NSLayoutConstraint constraintWithItem:imgView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:imgView  attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0]];
-    [mainScrollView  addConstraint:[NSLayoutConstraint constraintWithItem:imgView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:boardIDLabel  attribute:NSLayoutAttributeTop multiplier:1.0 constant:-24]];
-
-    UIWebView *webView = [[UIWebView alloc]init];
-    NSString *urlString = @"http://demo.hiraku.tw/CPUIdentifier/chart.php";
-    NSURL *url_demo = [NSURL URLWithString:urlString];
-    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url_demo];
-    webView.backgroundColor = [UIColor grayColor];
+        imgView.backgroundColor = [UIColor clearColor];
+        imgView.contentMode = UIViewContentModeScaleAspectFit;
+        [mainScrollView addSubview: imgView];
+        [imgView setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [mainScrollView  addConstraint:[NSLayoutConstraint constraintWithItem:imgView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:mainScrollView  attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+        [mainScrollView  addConstraint:[NSLayoutConstraint constraintWithItem:imgView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:mainScrollView  attribute:NSLayoutAttributeWidth multiplier:0.4 constant:0]];
+        [mainScrollView  addConstraint:[NSLayoutConstraint constraintWithItem:imgView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:imgView  attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0]];
+        [mainScrollView  addConstraint:[NSLayoutConstraint constraintWithItem:imgView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:boardIDLabel  attribute:NSLayoutAttributeTop multiplier:1.0 constant:-24]];
+    }
     
-    [webView loadRequest:urlRequest];
+    //Append chart
+    UIWebView *webView = [[UIWebView alloc] init];
+    NSURL* url = [NSURL URLWithString:@"http://demo.hiraku.tw/CPUIdentifier/chart.php"];
+    webView.backgroundColor = [UIColor grayColor];
+    [webView loadRequest:[NSURLRequest requestWithURL:url]];
+    
     [mainScrollView addSubview:webView];
     webView.userInteractionEnabled = NO;
     [webView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0]];
-    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:addition attribute:NSLayoutAttributeBottom multiplier:1.0 constant:100-upperOffset]];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:manufactory attribute:NSLayoutAttributeBottom multiplier:1.0 constant:100-upperOffset]];
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0 constant:1300]];
     
     mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, SCREEN_HEIGHT + 952 -upperOffset*2);
-    
-
-    
 }
 
 

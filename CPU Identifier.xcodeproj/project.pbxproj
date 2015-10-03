@@ -24,36 +24,8 @@
 		4EB000C41BB9502800054208 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB000C31BB9502800054208 /* ViewController.m */; };
 		4EB000C91BB9502800054208 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4EB000C81BB9502800054208 /* Assets.xcassets */; };
 		4EB000CC1BB9502800054208 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4EB000CA1BB9502800054208 /* LaunchScreen.storyboard */; };
-		4EB000D71BB9502800054208 /* CPU_testTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB000D61BB9502800054208 /* CPU_testTests.m */; };
-		4EB000E21BB9502800054208 /* CPU_testUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB000E11BB9502800054208 /* CPU_testUITests.m */; };
-		4EEB29321BBBA27B006EB7DB /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EEB29201BBBA27B006EB7DB /* AFHTTPRequestOperation.m */; settings = {ASSET_TAGS = (); }; };
-		4EEB29331BBBA27B006EB7DB /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EEB29221BBBA27B006EB7DB /* AFHTTPRequestOperationManager.m */; settings = {ASSET_TAGS = (); }; };
-		4EEB29341BBBA27B006EB7DB /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EEB29241BBBA27B006EB7DB /* AFHTTPSessionManager.m */; settings = {ASSET_TAGS = (); }; };
-		4EEB29351BBBA27B006EB7DB /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EEB29271BBBA27B006EB7DB /* AFNetworkReachabilityManager.m */; settings = {ASSET_TAGS = (); }; };
-		4EEB29361BBBA27B006EB7DB /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EEB29291BBBA27B006EB7DB /* AFSecurityPolicy.m */; settings = {ASSET_TAGS = (); }; };
-		4EEB29371BBBA27B006EB7DB /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EEB292B1BBBA27B006EB7DB /* AFURLConnectionOperation.m */; settings = {ASSET_TAGS = (); }; };
-		4EEB29381BBBA27B006EB7DB /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EEB292D1BBBA27B006EB7DB /* AFURLRequestSerialization.m */; settings = {ASSET_TAGS = (); }; };
-		4EEB29391BBBA27B006EB7DB /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EEB292F1BBBA27B006EB7DB /* AFURLResponseSerialization.m */; settings = {ASSET_TAGS = (); }; };
-		4EEB293A1BBBA27B006EB7DB /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EEB29311BBBA27B006EB7DB /* AFURLSessionManager.m */; settings = {ASSET_TAGS = (); }; };
 		CA8FFD5B1BB9B91100093C55 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = CA8FFD5A1BB9B91100093C55 /* background.png */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		4EB000D31BB9502800054208 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4EB000B11BB9502800054208 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4EB000B81BB9502800054208;
-			remoteInfo = "CPU test";
-		};
-		4EB000DE1BB9502800054208 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4EB000B11BB9502800054208 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4EB000B81BB9502800054208;
-			remoteInfo = "CPU test";
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		4E71C3321BB95AD6002B0FF1 /* MobileGestalt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileGestalt.h; sourceTree = "<group>"; };
@@ -78,31 +50,6 @@
 		4EB000C81BB9502800054208 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4EB000CB1BB9502800054208 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4EB000CD1BB9502800054208 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4EB000D21BB9502800054208 /* CPU Identifier.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CPU Identifier.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4EB000D61BB9502800054208 /* CPU_testTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CPU_testTests.m; sourceTree = "<group>"; };
-		4EB000D81BB9502800054208 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4EB000DD1BB9502800054208 /* CPU Identifier.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CPU Identifier.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4EB000E11BB9502800054208 /* CPU_testUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CPU_testUITests.m; sourceTree = "<group>"; };
-		4EB000E31BB9502800054208 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4EEB291F1BBBA27B006EB7DB /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFHTTPRequestOperation.h; path = AFNetWorking/AFHTTPRequestOperation.h; sourceTree = "<group>"; };
-		4EEB29201BBBA27B006EB7DB /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFHTTPRequestOperation.m; path = AFNetWorking/AFHTTPRequestOperation.m; sourceTree = "<group>"; };
-		4EEB29211BBBA27B006EB7DB /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFHTTPRequestOperationManager.h; path = AFNetWorking/AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
-		4EEB29221BBBA27B006EB7DB /* AFHTTPRequestOperationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFHTTPRequestOperationManager.m; path = AFNetWorking/AFHTTPRequestOperationManager.m; sourceTree = "<group>"; };
-		4EEB29231BBBA27B006EB7DB /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFHTTPSessionManager.h; path = AFNetWorking/AFHTTPSessionManager.h; sourceTree = "<group>"; };
-		4EEB29241BBBA27B006EB7DB /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFHTTPSessionManager.m; path = AFNetWorking/AFHTTPSessionManager.m; sourceTree = "<group>"; };
-		4EEB29251BBBA27B006EB7DB /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFNetworking.h; path = AFNetWorking/AFNetworking.h; sourceTree = "<group>"; };
-		4EEB29261BBBA27B006EB7DB /* AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFNetworkReachabilityManager.h; path = AFNetWorking/AFNetworkReachabilityManager.h; sourceTree = "<group>"; };
-		4EEB29271BBBA27B006EB7DB /* AFNetworkReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFNetworkReachabilityManager.m; path = AFNetWorking/AFNetworkReachabilityManager.m; sourceTree = "<group>"; };
-		4EEB29281BBBA27B006EB7DB /* AFSecurityPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFSecurityPolicy.h; path = AFNetWorking/AFSecurityPolicy.h; sourceTree = "<group>"; };
-		4EEB29291BBBA27B006EB7DB /* AFSecurityPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFSecurityPolicy.m; path = AFNetWorking/AFSecurityPolicy.m; sourceTree = "<group>"; };
-		4EEB292A1BBBA27B006EB7DB /* AFURLConnectionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFURLConnectionOperation.h; path = AFNetWorking/AFURLConnectionOperation.h; sourceTree = "<group>"; };
-		4EEB292B1BBBA27B006EB7DB /* AFURLConnectionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFURLConnectionOperation.m; path = AFNetWorking/AFURLConnectionOperation.m; sourceTree = "<group>"; };
-		4EEB292C1BBBA27B006EB7DB /* AFURLRequestSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFURLRequestSerialization.h; path = AFNetWorking/AFURLRequestSerialization.h; sourceTree = "<group>"; };
-		4EEB292D1BBBA27B006EB7DB /* AFURLRequestSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFURLRequestSerialization.m; path = AFNetWorking/AFURLRequestSerialization.m; sourceTree = "<group>"; };
-		4EEB292E1BBBA27B006EB7DB /* AFURLResponseSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFURLResponseSerialization.h; path = AFNetWorking/AFURLResponseSerialization.h; sourceTree = "<group>"; };
-		4EEB292F1BBBA27B006EB7DB /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFURLResponseSerialization.m; path = AFNetWorking/AFURLResponseSerialization.m; sourceTree = "<group>"; };
-		4EEB29301BBBA27B006EB7DB /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFURLSessionManager.h; path = AFNetWorking/AFURLSessionManager.h; sourceTree = "<group>"; };
-		4EEB29311BBBA27B006EB7DB /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFURLSessionManager.m; path = AFNetWorking/AFURLSessionManager.m; sourceTree = "<group>"; };
 		CA8FFD5A1BB9B91100093C55 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -112,20 +59,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E71C36A1BB98507002B0FF1 /* UIKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4EB000CF1BB9502800054208 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4EB000DA1BB9502800054208 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,9 +94,7 @@
 		4EB000B01BB9502800054208 = {
 			isa = PBXGroup;
 			children = (
-				4EB000BB1BB9502800054208 /* CPU test */,
-				4EB000D51BB9502800054208 /* CPU testTests */,
-				4EB000E01BB9502800054208 /* CPU testUITests */,
+				4EB000BB1BB9502800054208 /* CPU Identifier */,
 				4EB000BA1BB9502800054208 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -172,17 +103,14 @@
 			isa = PBXGroup;
 			children = (
 				4EB000B91BB9502800054208 /* CPU Identifier.app */,
-				4EB000D21BB9502800054208 /* CPU Identifier.xctest */,
-				4EB000DD1BB9502800054208 /* CPU Identifier.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		4EB000BB1BB9502800054208 /* CPU test */ = {
+		4EB000BB1BB9502800054208 /* CPU Identifier */ = {
 			isa = PBXGroup;
 			children = (
 				4E8550011BBBFB8100F8D77E /* Resource */,
-				4EEB291E1BBBA26F006EB7DB /* AFNetworking */,
 				4EB000BF1BB9502800054208 /* AppDelegate.h */,
 				4EB000C01BB9502800054208 /* AppDelegate.m */,
 				4EB000C21BB9502800054208 /* ViewController.h */,
@@ -196,6 +124,7 @@
 				4EB000BC1BB9502800054208 /* Supporting Files */,
 				4E71C36B1BB98523002B0FF1 /* Framework */,
 			);
+			name = "CPU Identifier";
 			path = "CPU test";
 			sourceTree = "<group>";
 		};
@@ -205,50 +134,6 @@
 				4EB000BD1BB9502800054208 /* main.m */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		4EB000D51BB9502800054208 /* CPU testTests */ = {
-			isa = PBXGroup;
-			children = (
-				4EB000D61BB9502800054208 /* CPU_testTests.m */,
-				4EB000D81BB9502800054208 /* Info.plist */,
-			);
-			path = "CPU testTests";
-			sourceTree = "<group>";
-		};
-		4EB000E01BB9502800054208 /* CPU testUITests */ = {
-			isa = PBXGroup;
-			children = (
-				4EB000E11BB9502800054208 /* CPU_testUITests.m */,
-				4EB000E31BB9502800054208 /* Info.plist */,
-			);
-			path = "CPU testUITests";
-			sourceTree = "<group>";
-		};
-		4EEB291E1BBBA26F006EB7DB /* AFNetworking */ = {
-			isa = PBXGroup;
-			children = (
-				4EEB291F1BBBA27B006EB7DB /* AFHTTPRequestOperation.h */,
-				4EEB29201BBBA27B006EB7DB /* AFHTTPRequestOperation.m */,
-				4EEB29211BBBA27B006EB7DB /* AFHTTPRequestOperationManager.h */,
-				4EEB29221BBBA27B006EB7DB /* AFHTTPRequestOperationManager.m */,
-				4EEB29231BBBA27B006EB7DB /* AFHTTPSessionManager.h */,
-				4EEB29241BBBA27B006EB7DB /* AFHTTPSessionManager.m */,
-				4EEB29251BBBA27B006EB7DB /* AFNetworking.h */,
-				4EEB29261BBBA27B006EB7DB /* AFNetworkReachabilityManager.h */,
-				4EEB29271BBBA27B006EB7DB /* AFNetworkReachabilityManager.m */,
-				4EEB29281BBBA27B006EB7DB /* AFSecurityPolicy.h */,
-				4EEB29291BBBA27B006EB7DB /* AFSecurityPolicy.m */,
-				4EEB292A1BBBA27B006EB7DB /* AFURLConnectionOperation.h */,
-				4EEB292B1BBBA27B006EB7DB /* AFURLConnectionOperation.m */,
-				4EEB292C1BBBA27B006EB7DB /* AFURLRequestSerialization.h */,
-				4EEB292D1BBBA27B006EB7DB /* AFURLRequestSerialization.m */,
-				4EEB292E1BBBA27B006EB7DB /* AFURLResponseSerialization.h */,
-				4EEB292F1BBBA27B006EB7DB /* AFURLResponseSerialization.m */,
-				4EEB29301BBBA27B006EB7DB /* AFURLSessionManager.h */,
-				4EEB29311BBBA27B006EB7DB /* AFURLSessionManager.m */,
-			);
-			name = AFNetworking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -271,42 +156,6 @@
 			productReference = 4EB000B91BB9502800054208 /* CPU Identifier.app */;
 			productType = "com.apple.product-type.application";
 		};
-		4EB000D11BB9502800054208 /* CPU IdentifierTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 4EB000E91BB9502800054208 /* Build configuration list for PBXNativeTarget "CPU IdentifierTests" */;
-			buildPhases = (
-				4EB000CE1BB9502800054208 /* Sources */,
-				4EB000CF1BB9502800054208 /* Frameworks */,
-				4EB000D01BB9502800054208 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				4EB000D41BB9502800054208 /* PBXTargetDependency */,
-			);
-			name = "CPU IdentifierTests";
-			productName = "CPU testTests";
-			productReference = 4EB000D21BB9502800054208 /* CPU Identifier.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		4EB000DC1BB9502800054208 /* CPU IdentifierUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 4EB000EC1BB9502800054208 /* Build configuration list for PBXNativeTarget "CPU IdentifierUITests" */;
-			buildPhases = (
-				4EB000D91BB9502800054208 /* Sources */,
-				4EB000DA1BB9502800054208 /* Frameworks */,
-				4EB000DB1BB9502800054208 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				4EB000DF1BB9502800054208 /* PBXTargetDependency */,
-			);
-			name = "CPU IdentifierUITests";
-			productName = "CPU testUITests";
-			productReference = 4EB000DD1BB9502800054208 /* CPU Identifier.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -319,14 +168,6 @@
 					4EB000B81BB9502800054208 = {
 						CreatedOnToolsVersion = 7.0;
 						DevelopmentTeam = Q6F5UHP863;
-					};
-					4EB000D11BB9502800054208 = {
-						CreatedOnToolsVersion = 7.0;
-						TestTargetID = 4EB000B81BB9502800054208;
-					};
-					4EB000DC1BB9502800054208 = {
-						CreatedOnToolsVersion = 7.0;
-						TestTargetID = 4EB000B81BB9502800054208;
 					};
 				};
 			};
@@ -344,8 +185,6 @@
 			projectRoot = "";
 			targets = (
 				4EB000B81BB9502800054208 /* CPU Identifier */,
-				4EB000D11BB9502800054208 /* CPU IdentifierTests */,
-				4EB000DC1BB9502800054208 /* CPU IdentifierUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -372,20 +211,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4EB000D01BB9502800054208 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4EB000DB1BB9502800054208 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -393,51 +218,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4EEB29321BBBA27B006EB7DB /* AFHTTPRequestOperation.m in Sources */,
 				4EB000C41BB9502800054208 /* ViewController.m in Sources */,
-				4EEB29331BBBA27B006EB7DB /* AFHTTPRequestOperationManager.m in Sources */,
-				4EEB29351BBBA27B006EB7DB /* AFNetworkReachabilityManager.m in Sources */,
-				4EEB29391BBBA27B006EB7DB /* AFURLResponseSerialization.m in Sources */,
-				4EEB29371BBBA27B006EB7DB /* AFURLConnectionOperation.m in Sources */,
-				4EEB29361BBBA27B006EB7DB /* AFSecurityPolicy.m in Sources */,
-				4EEB29341BBBA27B006EB7DB /* AFHTTPSessionManager.m in Sources */,
-				4EEB29381BBBA27B006EB7DB /* AFURLRequestSerialization.m in Sources */,
-				4EEB293A1BBBA27B006EB7DB /* AFURLSessionManager.m in Sources */,
 				4EB000C11BB9502800054208 /* AppDelegate.m in Sources */,
 				4EB000BE1BB9502800054208 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4EB000CE1BB9502800054208 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4EB000D71BB9502800054208 /* CPU_testTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4EB000D91BB9502800054208 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4EB000E21BB9502800054208 /* CPU_testUITests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		4EB000D41BB9502800054208 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4EB000B81BB9502800054208 /* CPU Identifier */;
-			targetProxy = 4EB000D31BB9502800054208 /* PBXContainerItemProxy */;
-		};
-		4EB000DF1BB9502800054208 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4EB000B81BB9502800054208 /* CPU Identifier */;
-			targetProxy = 4EB000DE1BB9502800054208 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		4E71C3371BB97BA5002B0FF1 /* Main.storyboard */ = {
@@ -606,54 +393,6 @@
 			};
 			name = Release;
 		};
-		4EB000EA1BB9502800054208 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = "CPU testTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "tw.garynil.CPU-testTests";
-				PRODUCT_NAME = "CPU Identifier";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CPU Identifier.app/CPU Identifier";
-			};
-			name = Debug;
-		};
-		4EB000EB1BB9502800054208 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = "CPU testTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "tw.garynil.CPU-testTests";
-				PRODUCT_NAME = "CPU Identifier";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CPU Identifier.app/CPU Identifier";
-			};
-			name = Release;
-		};
-		4EB000ED1BB9502800054208 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = "CPU testUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "tw.garynil.CPU-testUITests";
-				PRODUCT_NAME = "CPU Identifier";
-				TEST_TARGET_NAME = "CPU test";
-				USES_XCTRUNNER = YES;
-			};
-			name = Debug;
-		};
-		4EB000EE1BB9502800054208 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = "CPU testUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "tw.garynil.CPU-testUITests";
-				PRODUCT_NAME = "CPU Identifier";
-				TEST_TARGET_NAME = "CPU test";
-				USES_XCTRUNNER = YES;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -671,24 +410,6 @@
 			buildConfigurations = (
 				4EB000E71BB9502800054208 /* Debug */,
 				4EB000E81BB9502800054208 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		4EB000E91BB9502800054208 /* Build configuration list for PBXNativeTarget "CPU IdentifierTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4EB000EA1BB9502800054208 /* Debug */,
-				4EB000EB1BB9502800054208 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		4EB000EC1BB9502800054208 /* Build configuration list for PBXNativeTarget "CPU IdentifierUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				4EB000ED1BB9502800054208 /* Debug */,
-				4EB000EE1BB9502800054208 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

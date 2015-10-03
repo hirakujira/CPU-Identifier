@@ -24,16 +24,9 @@
 #define IS_IPHONE_6P (IS_IPHONE && SCREEN_MAX_LENGTH == 736.0)
 #define HeightDevide_FOR_GoogleAD 12
 
-
-@interface ViewController : UIViewController
-{
-    int areaCode ;
-    NSString *lang;
-    NSString* region;
+@interface ViewController : UIViewController {
     NSString* imageName;
     UIScrollView *mainScrollView;
-
 }
-
 @end
 
