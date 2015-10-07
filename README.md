@@ -2,7 +2,7 @@
 
 This tiny app can detect the CPU chipset of your iPhone. For iPhone 6s / 6s Plus, it can also detect the manufactory (TSMC or Samsung) of A9 chip.
 
-The compiled (and signed) binary file that I distrubte would upload the chip model, device type info and an [unique id](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIDevice_Class/#//apple_ref/occ/instp/UIDevice/identifierForVendor) (not UDID, SN or IMEI) to my server, but it's for statistics only. Therefore, I can't identify you from these information. The statistic result is [here](http://demo.hiraku.tw/CPUIdentifier).
+The compiled (and signed) binary file that I distrubte would upload the chip model, device model and an [unique id](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIDevice_Class/#//apple_ref/occ/instp/UIDevice/identifierForVendor) (not UDID, SN or IMEI) to my server, but it's for statistics only. Therefore, I can't identify you from these information. The statistic result is [here](http://demo.hiraku.tw/CPUIdentifier).
 
 ## How to Use
 Open [http://demo.hiraku.tw/CPUIdentifier](http://demo.hiraku.tw/CPUIdentifier) on your iPhone, and follow the introduction to install.
