@@ -67,7 +67,7 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
         imageName = @"A8X";
     }else if ([str2Cmp hasPrefix:@"s5l8950"]){
         imageName = @"A6";
-    }else if ([str2Cmp hasPrefix:@"S5L8955"]){
+    }else if ([str2Cmp hasPrefix:@"s5L8955"]){
         imageName = @"A6X";
     }else if ([str2Cmp hasPrefix:@"s5l8940"] || [str2Cmp hasPrefix:@"s5l8942"] ){
         imageName = @"A5";
