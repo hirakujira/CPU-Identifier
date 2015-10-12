@@ -25,6 +25,9 @@ extern "C" {
 #endif
 
 
+#define showAds 0
+#define showFB 0
+
 @implementation ViewController
 
 - (NSString *)platformString {
@@ -126,8 +129,6 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     }
     
     NSString *adId = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
-//    NSLog(@"ok %@",(__bridge NSString*)(CFStringRef)$MGCopyAnswer(kMGRegionCode));
-    //NSLog(@"adId is %@",adId);
     NSString *url = @"http://demo.hiraku.tw/CPUIdentifier/stat.php";
     NSString *requestStr = [[NSString alloc] initWithFormat:@"%@?adid=%@&device_type=%@&model=%@&region=%@&chip=%@",url,adId,[self platformString], (__bridge NSString*)(CFStringRef)$MGCopyAnswer(kMGModelNumber), (__bridge NSString*)(CFStringRef)$MGCopyAnswer(kMGRegionCode),boardIDLabel.text];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[requestStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10.0];
@@ -157,59 +158,64 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     [mainScrollView  addConstraint:[NSLayoutConstraint constraintWithItem:imgView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:imgView  attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0]];
     [mainScrollView  addConstraint:[NSLayoutConstraint constraintWithItem:imgView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:boardIDLabel  attribute:NSLayoutAttributeTop multiplier:1.0 constant:-24]];
     
-    //Add google ads
-    gADBannerView = [[GADBannerView alloc] init];// 調整廣告的位置
-    [gADBannerView setTranslatesAutoresizingMaskIntoConstraints:NO];
-    gADBannerView.backgroundColor = [UIColor blackColor];
-    gADBannerView.adUnitID = AdmobIDBtn;
+    if (showAds) {
+        
+        //Add google ads
+        gADBannerView = [[GADBannerView alloc] init];// 調整廣告的位置
+        [gADBannerView setTranslatesAutoresizingMaskIntoConstraints:NO];
+        gADBannerView.backgroundColor = [UIColor blackColor];
+        gADBannerView.adUnitID = AdmobIDBtn;
+        
+        grequest = [GADRequest request];
+        grequest.testDevices = @[
+                                 kGADSimulatorID,
+                                 kDFPSimulatorID,
+                                 ];
+        gADBannerView.rootViewController = self;
+        
+        [self.view  addSubview:gADBannerView];
+        [self.view  addConstraint:[NSLayoutConstraint constraintWithItem:gADBannerView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view  attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+        [self.view  addConstraint:[NSLayoutConstraint constraintWithItem:gADBannerView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view  attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0]];
+        [self.view  addConstraint:[NSLayoutConstraint constraintWithItem:gADBannerView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view  attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0]];
+        [gADBannerView setHidden:YES];
+        
+        [self.view  addConstraint:[NSLayoutConstraint constraintWithItem:gADBannerView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0 constant:adH]];
+        
+        interstitial = [[GADInterstitial alloc] initWithAdUnitID:AdmobIDAll];
+        
+        grequest2 = [GADRequest request];
+        // Requests test ads on test devices.
+        grequest2.testDevices = @[
+                                  testiPhoneID1,
+                                  testiPhoneID2,
+                                  kGADSimulatorID,
+                                  kDFPSimulatorID,
+                                  ];
+        
+        // 設定廣告位置
+        CGPoint origin = CGPointMake(0.0,SCREEN_HEIGHT - CGSizeFromVpadnAdSize(VpadnAdSizeSmartBannerPortrait).height);
+        vpadnAd = [[VpadnBanner alloc] initWithAdSize:VpadnAdSizeSmartBannerPortrait origin:origin];  // 初始化Banner物件
+        vpadnAd.strBannerId = vponIDBanner;   // 填入您的BannerId
+        vpadnAd.delegate = self;       // 設定delegate接收protocol回傳訊息
+        // 台灣地區請填TW 大陸則填CN
+        [vpadnAd setAdAutoRefresh:NO]; //如果為mediation則set NO
+        [vpadnAd setRootViewController:self]; //請將window的rootViewController設定在此 以便廣告順利執行
+    }
     
-    grequest = [GADRequest request];
-    grequest.testDevices = @[
-                             kGADSimulatorID,
-                             kDFPSimulatorID,
-                             ];
-    gADBannerView.rootViewController = self;
     
-    [self.view  addSubview:gADBannerView];
-    [self.view  addConstraint:[NSLayoutConstraint constraintWithItem:gADBannerView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view  attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
-    [self.view  addConstraint:[NSLayoutConstraint constraintWithItem:gADBannerView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view  attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0]];
-    [self.view  addConstraint:[NSLayoutConstraint constraintWithItem:gADBannerView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view  attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0]];
-    [gADBannerView setHidden:YES];
-    
-    [self.view  addConstraint:[NSLayoutConstraint constraintWithItem:gADBannerView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0 constant:adH]];
-    
-    interstitial = [[GADInterstitial alloc] initWithAdUnitID:AdmobIDAll];
-    
-    grequest2 = [GADRequest request];
-    // Requests test ads on test devices.
-    grequest2.testDevices = @[
-                             testiPhoneID1,
-                             testiPhoneID2,
-                             kGADSimulatorID,
-                             kDFPSimulatorID,
-                             ];
-
-    // 設定廣告位置
-    CGPoint origin = CGPointMake(0.0,SCREEN_HEIGHT - CGSizeFromVpadnAdSize(VpadnAdSizeSmartBannerPortrait).height);
-    vpadnAd = [[VpadnBanner alloc] initWithAdSize:VpadnAdSizeSmartBannerPortrait origin:origin];  // 初始化Banner物件
-    vpadnAd.strBannerId = vponIDBanner;   // 填入您的BannerId
-    vpadnAd.delegate = self;       // 設定delegate接收protocol回傳訊息
-          // 台灣地區請填TW 大陸則填CN
-    [vpadnAd setAdAutoRefresh:NO]; //如果為mediation則set NO
-    [vpadnAd setRootViewController:self]; //請將window的rootViewController設定在此 以便廣告順利執行
-    
-    
-    FBSDKShareButton *button = [[FBSDKShareButton alloc] init];
-    NSString* content = isA9 ? [NSString stringWithFormat:@"The A9 chip of my iPhone 6s/6s plus is manufactured by %@. Check yours!", manufactory.text] : [NSString stringWithFormat:@"I'm using CPU Identifier to show the chip info of my iPhone. Check yours!"];
-    FBSDKShareLinkContent *fbcontent= [[FBSDKShareLinkContent alloc] init];
-    fbcontent.contentURL = [NSURL URLWithString:@"http://demo.hiraku.tw/CPUIdentifier/index.html"];
-    fbcontent.contentTitle = @"Check out the chip manufactory of your iPhone 6s/6s Plus!";
-    fbcontent.contentDescription = content;
-    button.shareContent = fbcontent;
-    [mainScrollView addSubview:button];
-    [button setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
-    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:100-upperOffset]];
+    if (showFB) {
+        FBSDKShareButton *button = [[FBSDKShareButton alloc] init];
+        NSString* content = isA9 ? [NSString stringWithFormat:@"The A9 chip of my iPhone 6s/6s plus is manufactured by %@. Check yours!", manufactory.text] : [NSString stringWithFormat:@"I'm using CPU Identifier to show the chip info of my iPhone. Check yours!"];
+        FBSDKShareLinkContent *fbcontent= [[FBSDKShareLinkContent alloc] init];
+        fbcontent.contentURL = [NSURL URLWithString:@"http://demo.hiraku.tw/CPUIdentifier/index.html"];
+        fbcontent.contentTitle = @"Check out the chip manufactory of your iPhone 6s/6s Plus!";
+        fbcontent.contentDescription = content;
+        button.shareContent = fbcontent;
+        [mainScrollView addSubview:button];
+        [button setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+        [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:100-upperOffset]];
+    }
     
     UIButton* linkButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [linkButton setBackgroundColor:[UIColor colorWithRed:0.188 green:0.822 blue:0.517 alpha:1]];
@@ -219,7 +225,7 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     linkButton.translatesAutoresizingMaskIntoConstraints = NO;
     [mainScrollView addSubview:linkButton];
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:linkButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
-    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:linkButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:button attribute:NSLayoutAttributeBottom multiplier:1.0 constant:25]];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:linkButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:manufactory attribute:NSLayoutAttributeBottom multiplier:1.0 constant:25]];
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:linkButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:200.0f]];
     [linkButton addTarget:self action:@selector(buttonPressed) forControlEvents:UIControlEventTouchUpInside];
 
@@ -231,17 +237,25 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     
     [webView loadRequest:urlRequest];
     [mainScrollView addSubview:webView];
-    webView.userInteractionEnabled = NO;
+    CGFloat height = [[webView stringByEvaluatingJavaScriptFromString:@"document.height"] floatValue];
+//    webView.userInteractionEnabled = NO;
     [webView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0]];
-    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:button attribute:NSLayoutAttributeBottom multiplier:1.0 constant:150-upperOffset]];
-    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0 constant:1300]];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:manufactory attribute:NSLayoutAttributeBottom multiplier:1.0 constant:150-upperOffset]];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0 constant:height]];
     
     mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, SCREEN_HEIGHT + 952 -upperOffset);
-    
+}
 
-    
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    CGRect oldBounds = [webView bounds];
+    CGFloat height = [[webView stringByEvaluatingJavaScriptFromString:@"document.height"] floatValue];
+    NSLog(@"NEW HEIGHT %f", height);
+    [webView setBounds:CGRectMake(oldBounds.origin.x, oldBounds.origin.y, oldBounds.size.width, height)];
+    mainScrollView.contentSize = webView.bounds.size;
 }
 
 -(NSArray*)getTestIdentifiers
@@ -356,35 +370,36 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     //NSLog(@"IP from Area: %@",[respDict valueForKey:@"countryCode"]);
     region = [respDict valueForKey:@"countryCode"];
     vpadnAd.platform = region;
-    if(region) {
-//        NSLog(@"region is %@",region);
-        if ([region isEqualToString:@"TW"]) {
-            [self.view addSubview:[vpadnAd getVpadnAdView]]; // 將VpadnBanner的View加入此ViewController中
-            [vpadnAd startGetAd:[self getTestIdentifiers]]; // 開始抓取Banner廣告
-            // Show 全幅廣告
-            [self addInterstitialAds:NO];
+    if (showAds) {
+        if(region) {
+            //        NSLog(@"region is %@",region);
+            if ([region isEqualToString:@"TW"]) {
+                [self.view addSubview:[vpadnAd getVpadnAdView]]; // 將VpadnBanner的View加入此ViewController中
+                [vpadnAd startGetAd:[self getTestIdentifiers]]; // 開始抓取Banner廣告
+                // Show 全幅廣告
+                [self addInterstitialAds:NO];
+            }
+            else {
+                [interstitial loadRequest:grequest2];
+                [gADBannerView loadRequest:grequest];
+                [gADBannerView setHidden:NO];
+                [self addInterstitialAds:YES];
+            }
         }
         else {
-            [interstitial loadRequest:grequest2];
-            [gADBannerView loadRequest:grequest];
-            [gADBannerView setHidden:NO];
-            [self addInterstitialAds:YES];
+            if (areaCode != 3) {
+                [interstitial loadRequest:grequest2];
+                [gADBannerView loadRequest:grequest];
+                [gADBannerView setHidden:NO];
+                [self addInterstitialAds:YES];
+            }
+            else {
+                [self.view addSubview:[vpadnAd getVpadnAdView]]; // 將VpadnBanner的View加入此ViewController中
+                [vpadnAd startGetAd:[self getTestIdentifiers]]; // 開始抓取Banner廣告
+                [self addInterstitialAds:NO];
+            }
         }
     }
-    else {
-        if (areaCode != 3) {
-            [interstitial loadRequest:grequest2];
-            [gADBannerView loadRequest:grequest];
-            [gADBannerView setHidden:NO];
-            [self addInterstitialAds:YES];
-        }
-        else {
-            [self.view addSubview:[vpadnAd getVpadnAdView]]; // 將VpadnBanner的View加入此ViewController中
-            [vpadnAd startGetAd:[self getTestIdentifiers]]; // 開始抓取Banner廣告
-            [self addInterstitialAds:NO];
-        }
-    }
-
 }
 
 - (void)addInterstitialAds:(bool)isGoogleAD{

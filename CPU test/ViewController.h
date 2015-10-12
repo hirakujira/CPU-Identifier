@@ -41,7 +41,7 @@
 #define testiPhoneVID2 @"5499571D-4A59-418A-A5FF-CCD1FD757EFC"  // Gary's iPhone 4 for Vpad
 @import GoogleMobileAds;
 
-@interface ViewController : UIViewController <VpadnBannerDelegate, VpadnInterstitialDelegate>
+@interface ViewController : UIViewController <VpadnBannerDelegate, VpadnInterstitialDelegate ,UIWebViewDelegate>
 {
     VpadnBanner*    vpadnAd; // 宣告使用VpadnBanner廣告
     VpadnInterstitial*    vpadnInterstitial; // 宣告使用Vpadn插屏廣告
