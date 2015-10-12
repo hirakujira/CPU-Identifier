@@ -76,12 +76,13 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
         adH = 52;
     }
     
+    
     NSLog(@"=====>You are in %@ areacode : %d",lang,areaCode);
     [self getIPLocation];
     
     void *gestalt = dlopen("/usr/lib/libMobileGestalt.dylib", RTLD_GLOBAL | RTLD_LAZY);
     $MGCopyAnswer = dlsym(gestalt, "MGCopyAnswer");
-    NSLog(@"UDID %@",[self platformString2]);
+//    NSLog(@"UDID %@",[self platformString2]);
     
     mainScrollView = [[UIScrollView alloc] init];
     [self.view addSubview:mainScrollView];
@@ -89,7 +90,7 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:mainScrollView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:mainScrollView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:mainScrollView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:mainScrollView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view  attribute:NSLayoutAttributeHeight multiplier:1.0 constant:-adH]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:mainScrollView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view  attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0]];
     
     CFStringRef boardID = (CFStringRef)$MGCopyAnswer(CFSTR("HardwarePlatform"));
     UILabel* boardIDLabel = [[UILabel alloc] init];
@@ -234,29 +235,30 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     NSURL *url_demo = [NSURL URLWithString:urlString];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url_demo];
     webView.backgroundColor = [UIColor grayColor];
-    
+    webView.delegate = self;
     [webView loadRequest:urlRequest];
     [mainScrollView addSubview:webView];
-    CGFloat height = [[webView stringByEvaluatingJavaScriptFromString:@"document.height"] floatValue];
+//    CGFloat height = [[webView stringByEvaluatingJavaScriptFromString:@"document.height"] floatValue];
 //    webView.userInteractionEnabled = NO;
     [webView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0]];
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:manufactory attribute:NSLayoutAttributeBottom multiplier:1.0 constant:150-upperOffset]];
-    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0 constant:height]];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0 constant:1150]];
     
-    mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, SCREEN_HEIGHT + 952 -upperOffset);
+    mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, SCREEN_HEIGHT + 952 - upperOffset);
 }
 
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView
-{
-    CGRect oldBounds = [webView bounds];
-    CGFloat height = [[webView stringByEvaluatingJavaScriptFromString:@"document.height"] floatValue];
-    NSLog(@"NEW HEIGHT %f", height);
-    [webView setBounds:CGRectMake(oldBounds.origin.x, oldBounds.origin.y, oldBounds.size.width, height)];
-    mainScrollView.contentSize = webView.bounds.size;
-}
+//- (void)webViewDidFinishLoad:(UIWebView *)webView
+//{
+//    CGRect oldBounds = [webView bounds];
+//    CGFloat height = [[webView stringByEvaluatingJavaScriptFromString:@"document.height"] floatValue];
+//    NSLog(@"NEW HEIGHT %f", height);
+////    [webView setBounds:CGRectMake(oldBounds.origin.x, oldBounds.origin.y, oldBounds.size.width, height)];
+//    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0 constant:height]];
+////    mainScrollView.contentSize = webView.bounds.size;
+//}
 
 -(NSArray*)getTestIdentifiers
 {
