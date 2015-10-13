@@ -58,6 +58,7 @@
 		4EEB29381BBBA27B006EB7DB /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EEB292D1BBBA27B006EB7DB /* AFURLRequestSerialization.m */; settings = {ASSET_TAGS = (); }; };
 		4EEB29391BBBA27B006EB7DB /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EEB292F1BBBA27B006EB7DB /* AFURLResponseSerialization.m */; settings = {ASSET_TAGS = (); }; };
 		4EEB293A1BBBA27B006EB7DB /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EEB29311BBBA27B006EB7DB /* AFURLSessionManager.m */; settings = {ASSET_TAGS = (); }; };
+		CA73B7F91BCC1EE900EC3048 /* chartbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = CA73B7F81BCC1EE900EC3048 /* chartbutton.png */; settings = {ASSET_TAGS = (); }; };
 		CA8FFD551BB99DF400093C55 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA8FFD541BB99DF300093C55 /* FBSDKShareKit.framework */; settings = {ASSET_TAGS = (); }; };
 		CA8FFD581BB99F4B00093C55 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA8FFD561BB99F4B00093C55 /* FBSDKCoreKit.framework */; settings = {ASSET_TAGS = (); }; };
 		CA8FFD591BB99F4B00093C55 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA8FFD571BB99F4B00093C55 /* FBSDKLoginKit.framework */; settings = {ASSET_TAGS = (); }; };
@@ -154,6 +155,7 @@
 		4EEB292F1BBBA27B006EB7DB /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFURLResponseSerialization.m; path = AFNetWorking/AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		4EEB29301BBBA27B006EB7DB /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFURLSessionManager.h; path = AFNetWorking/AFURLSessionManager.h; sourceTree = "<group>"; };
 		4EEB29311BBBA27B006EB7DB /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFURLSessionManager.m; path = AFNetWorking/AFURLSessionManager.m; sourceTree = "<group>"; };
+		CA73B7F81BCC1EE900EC3048 /* chartbutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chartbutton.png; sourceTree = "<group>"; };
 		CA8FFD541BB99DF300093C55 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
 		CA8FFD561BB99F4B00093C55 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		CA8FFD571BB99F4B00093C55 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
@@ -309,6 +311,7 @@
 				4EB000CA1BB9502800054208 /* LaunchScreen.storyboard */,
 				4EB000CD1BB9502800054208 /* Info.plist */,
 				CA8FFD5A1BB9B91100093C55 /* background.png */,
+				CA73B7F81BCC1EE900EC3048 /* chartbutton.png */,
 				4EB000BC1BB9502800054208 /* Supporting Files */,
 				4E71C36B1BB98523002B0FF1 /* Framework */,
 			);
@@ -475,6 +478,7 @@
 				4E8550111BBC047A00F8D77E /* A6.png in Resources */,
 				4E8550101BBC047A00F8D77E /* A5X.png in Resources */,
 				4E8550151BBC047A00F8D77E /* A8X.png in Resources */,
+				CA73B7F91BCC1EE900EC3048 /* chartbutton.png in Resources */,
 				4E8550031BBBFB8D00F8D77E /* A9.png in Resources */,
 				4E85500E1BBC047A00F8D77E /* A4.png in Resources */,
 				4E71C3391BB97BA5002B0FF1 /* Main.storyboard in Resources */,
