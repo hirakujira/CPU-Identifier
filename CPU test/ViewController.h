@@ -47,11 +47,13 @@
     VpadnInterstitial*    vpadnInterstitial; // 宣告使用Vpadn插屏廣告
     GADInterstitial *interstitial;
     GADBannerView *gADBannerView;
-    int areaCode ;
+    int areaCode ,upperOffset;
     NSString *lang;
     NSString* region;
     NSString* imageName;
     UIScrollView *mainScrollView;
+    UIWebView *webView;
+    NSLayoutConstraint *heightConstraint;
     
     GADRequest *grequest;
     GADRequest *grequest2;

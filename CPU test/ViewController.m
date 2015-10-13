@@ -67,7 +67,7 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     }
     //areaCode = 1;
     
-    int adH ,upperOffset = 70;
+    int adH  = 70;
     if(IS_IPHONE_6P ){
         adH = 66;
     }else if(IS_IPHONE_6){
@@ -89,7 +89,7 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     [mainScrollView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:mainScrollView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:mainScrollView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:mainScrollView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:mainScrollView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:20]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:mainScrollView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view  attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0]];
     
     CFStringRef boardID = (CFStringRef)$MGCopyAnswer(CFSTR("HardwarePlatform"));
@@ -230,11 +230,12 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:linkButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:200.0f]];
     [linkButton addTarget:self action:@selector(buttonPressed) forControlEvents:UIControlEventTouchUpInside];
 
-    UIWebView *webView = [[UIWebView alloc]init];
     NSString *urlString = @"http://demo.hiraku.tw/CPUIdentifier/chart.php";
+    //urlString = @"http://demo.hiraku.tw/CPUIdentifier/region/TA.php";
     NSURL *url_demo = [NSURL URLWithString:urlString];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url_demo];
     webView.backgroundColor = [UIColor grayColor];
+    webView = [[UIWebView alloc] init];
     webView.delegate = self;
     [webView loadRequest:urlRequest];
     [mainScrollView addSubview:webView];
@@ -244,9 +245,14 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0]];
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:manufactory attribute:NSLayoutAttributeBottom multiplier:1.0 constant:150-upperOffset]];
-    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0 constant:1500]];
+    heightConstraint = [NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeHeight
+                                                    relatedBy:NSLayoutRelationEqual
+                                                       toItem:nil attribute:NSLayoutAttributeNotAnAttribute
+                                                   multiplier:0.0f constant:10.0f];
+    [mainScrollView addConstraint:heightConstraint];
+
     
-    mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, SCREEN_HEIGHT + 1100 - upperOffset);
+//    mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, SCREEN_HEIGHT + 1100 - upperOffset);
 }
 
 
@@ -257,6 +263,21 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     }
     
     return YES;
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webViewin
+{
+    CGFloat height = [[webViewin stringByEvaluatingJavaScriptFromString:@"document.height"] floatValue];
+    
+    //NSLog(@"NEW HEIGHT %f", height);
+    
+    [mainScrollView removeConstraint:heightConstraint];
+    heightConstraint = [NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeHeight
+                                                    relatedBy:NSLayoutRelationEqual
+                                                       toItem:nil attribute:NSLayoutAttributeNotAnAttribute
+                                                   multiplier:0.0f constant:height];
+    [mainScrollView addConstraint:heightConstraint];
+    [mainScrollView setContentSize:CGSizeMake(SCREEN_WIDTH,  SCREEN_HEIGHT/2 +240 + height)];
 }
 
 //- (void)webViewDidFinishLoad:(UIWebView *)webView
