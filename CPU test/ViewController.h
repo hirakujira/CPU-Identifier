@@ -59,6 +59,12 @@
     GADRequest *grequest2;
     
     vm_size_t pagesize;
+    
+    UILabel* totalMem,*totalMemTitle;
+    UILabel* activeMem,*activeMemTitle;
+    UILabel* wireMem,*wireMemTitle;
+    UILabel* inactiveMem,*inactiveMemTitle;
+    UILabel* freeMem,*freeMemTitle;
 }
 
 @property (nonatomic, strong) NSTimer           *ramUsageTimer;

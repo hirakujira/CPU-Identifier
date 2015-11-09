@@ -120,7 +120,47 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     boardIDLabel.text = [NSString stringWithFormat:@"%@",(__bridge NSString *)boardID];
     HWModelStrLabel.text = [NSString stringWithFormat:@"%@",(__bridge NSString *)HWModelStr];
     platformLabel.text = [NSString stringWithFormat:@"%@",[self platformString]];
-
+    
+    
+    //qwueoiqwueoiqwu
+    totalMem = [[UILabel alloc] init];
+    activeMem = [[UILabel alloc] init];
+    wireMem = [[UILabel alloc] init];
+    inactiveMem = [[UILabel alloc] init];
+    freeMem  = [[UILabel alloc] init];
+    [totalMem setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [activeMem setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [wireMem setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [inactiveMem setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [freeMem setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [mainScrollView addSubview:totalMem];
+    [mainScrollView addSubview:activeMem];
+    [mainScrollView addSubview:wireMem];
+    [mainScrollView addSubview:inactiveMem];
+    [mainScrollView addSubview:freeMem];
+    
+    
+    totalMemTitle = [[UILabel alloc] init];
+    activeMemTitle = [[UILabel alloc] init];
+    wireMemTitle = [[UILabel alloc] init];
+    inactiveMemTitle = [[UILabel alloc] init];
+    freeMemTitle  = [[UILabel alloc] init];
+    [totalMemTitle setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [activeMemTitle setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [wireMemTitle setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [inactiveMemTitle setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [freeMemTitle setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [mainScrollView addSubview:totalMemTitle];
+    [mainScrollView addSubview:activeMemTitle];
+    [mainScrollView addSubview:wireMemTitle];
+    [mainScrollView addSubview:inactiveMemTitle];
+    [mainScrollView addSubview:freeMemTitle];
+    
+    
+    
+    
+    
+    
     BOOL isA9 = NO;
     manufactory.text = @"";
     if ([(__bridge NSString *)boardID isEqualToString:@"s8000"]) {
@@ -278,6 +318,21 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
         [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:platformLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:HWModelStrLabel attribute:NSLayoutAttributeTop multiplier:1.0 constant:0]];
         [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:imgView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:platformLabel  attribute:NSLayoutAttributeTop multiplier:1.0 constant:-20]];
     
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:totalMem attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:20]];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:totalMem attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:manufactory attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0]];
+    
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:activeMem attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:20]];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:activeMem attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:totalMem attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0]];
+    
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:wireMem attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:20]];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:wireMem attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:activeMem attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0]];
+    
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:inactiveMem attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:20]];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:inactiveMem attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:wireMem attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0]];
+    
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:freeMem attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:20]];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:freeMem attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:inactiveMem attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0]];
+    
     if (showAds) {
         
         //Add google ads
@@ -345,6 +400,26 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     [mainScrollView addSubview:CPUTypePre];
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:CPUTypePre attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:CPUTypePre attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:type attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
+    
+    [mainScrollView addSubview:totalMemTitle];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:totalMemTitle attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:totalMemTitle attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:totalMem attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
+    
+    [mainScrollView addSubview:activeMemTitle];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:activeMemTitle attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:activeMemTitle attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:activeMem attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
+    
+    [mainScrollView addSubview:wireMemTitle];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:wireMemTitle attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:wireMemTitle attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:wireMem attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
+    
+    [mainScrollView addSubview:inactiveMemTitle];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:inactiveMemTitle attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:inactiveMemTitle attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:inactiveMem attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
+    
+    [mainScrollView addSubview:freeMemTitle];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:freeMemTitle attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:freeMemTitle attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:freeMem attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
     
 
 //    if (showFB) {
@@ -704,7 +779,13 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
 
 
 -(void) logMemUsage {
-    NSLog(@"Memory total %7lu  active %7lu  wire %7lu  inactive %7lu free %7lu" , (unsigned long)[self memoryBytesTotal],(unsigned long)[self memoryActive],(unsigned long)[self memoryWire],(unsigned long)[self memoryInactive],(unsigned long)[self memoryBytesFree]);
+//    NSLog(@"Memory total %7lu  active %7lu  wire %7lu  inactive %7lu free %7lu" , (unsigned long)[self memoryBytesTotal],(unsigned long)[self memoryActive],(unsigned long)[self memoryWire],(unsigned long)[self memoryInactive],(unsigned long)[self memoryBytesFree]);
+    totalMem.text = [NSString stringWithFormat:@"%lu",(unsigned long)[self memoryBytesTotal]];
+    activeMem.text = [NSString stringWithFormat:@"%lu",(unsigned long)[self memoryActive]];
+    wireMem.text = [NSString stringWithFormat:@"%lu",(unsigned long)[self memoryWire]];
+    inactiveMem.text = [NSString stringWithFormat:@"%lu",(unsigned long)[self memoryInactive]];
+    freeMem.text = [NSString stringWithFormat:@"%lu",(unsigned long)[self memoryBytesFree]];
+    
 
 }
 
