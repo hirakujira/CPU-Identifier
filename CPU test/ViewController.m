@@ -52,16 +52,6 @@ extern "C" {
     return sDeviceModel;
 }
 
-- (NSString *)machine {
-    size_t size;
-    sysctlbyname("hw.machine", NULL, &size, NULL, 0);
-    char *model = (char*)malloc(size);
-    sysctlbyname("hw.machine", model, &size, NULL, 0);
-    NSString *sDeviceModel = [NSString stringWithCString:model encoding:NSUTF8StringEncoding];
-    free(model);
-    return sDeviceModel;
-}
-
 
 static CFStringRef (*$MGCopyAnswer)(CFStringRef);
 - (void)viewDidLoad {
@@ -106,18 +96,24 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:mainScrollView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view  attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0]];
     mainScrollView.contentInset = UIEdgeInsetsMake(-100, 0, 0, 0);
     CFStringRef boardID = (CFStringRef)$MGCopyAnswer(CFSTR("HardwarePlatform"));
+    CFStringRef HWModelStr = (CFStringRef)$MGCopyAnswer(CFSTR("HWModelStr"));
     UILabel* boardIDLabel = [[UILabel alloc] init];
     UILabel* manufactory = [[UILabel alloc] init];
-    boardIDLabel.text = [NSString stringWithFormat:@"CPU Type:        %@",(__bridge NSString *)boardID];
+    UILabel* HWModelStrLabel = [[UILabel alloc] init];
+    UILabel* platformLabel = [[UILabel alloc] init];
+    boardIDLabel.text = [NSString stringWithFormat:@"%@",(__bridge NSString *)boardID];
+    HWModelStrLabel.text = [NSString stringWithFormat:@"%@",(__bridge NSString *)HWModelStr];
+    platformLabel.text = [NSString stringWithFormat:@"%@",[self platformString]];
+
     BOOL isA9 = NO;
     manufactory.text = @"";
     if ([(__bridge NSString *)boardID isEqualToString:@"s8000"]) {
-        manufactory.text = @"Manufactory:        Samsung";
+        manufactory.text = @"Samsung";
         isA9 = YES;
         imageName = @"A9";
     }
     if ([(__bridge NSString *)boardID isEqualToString:@"s8003"]) {
-        manufactory.text = @"Manufactory:        TSMC";
+        manufactory.text = @"TSMC";
         isA9 = YES;
         imageName = @"A9";
     }
@@ -156,28 +152,67 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     //    [mainScrollView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [boardIDLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
     [manufactory setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [boardIDLabel setFont:[UIFont systemFontOfSize:18]];
+    [HWModelStrLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [platformLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+//    [boardIDLabel setFont:[UIFont systemFontOfSize:18]];
     //    [boardIDLabel.text]
+    
+    UILabel* boardIDLabelPre = [[UILabel alloc] init];
+    UILabel* platformLabelPre = [[UILabel alloc] init];
+    UILabel* manuPre = [[UILabel alloc] init];
+    UILabel* HWPre = [[UILabel alloc] init];
+    UILabel* CPUTypePre = [[UILabel alloc] init];
+    
+    boardIDLabelPre.text = @"CPU Type:";
+    boardIDLabelPre.textAlignment = NSTextAlignmentRight;
+    boardIDLabelPre.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    manuPre.text = @"Manufactory:";
+    manuPre.textAlignment = NSTextAlignmentRight;
+    manuPre.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    platformLabelPre.text = @"Device:";
+    platformLabelPre.textAlignment = NSTextAlignmentRight;
+    platformLabelPre.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    HWPre.text = @"Device Model:";
+    HWPre.textAlignment = NSTextAlignmentRight;
+    HWPre.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    CPUTypePre.text = @"CPU Name:";
+    CPUTypePre.textAlignment = NSTextAlignmentRight;
+    CPUTypePre.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    boardIDLabel.textAlignment = NSTextAlignmentLeft;
+    manufactory.textAlignment = NSTextAlignmentLeft;
+    platformLabel.textAlignment = NSTextAlignmentLeft;
+    
+    
+    
     [mainScrollView addSubview:boardIDLabel];
+    [mainScrollView addSubview:platformLabel];
     [mainScrollView addSubview:manufactory];
-    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:boardIDLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+    [mainScrollView addSubview:HWModelStrLabel];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:boardIDLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:20]];
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:boardIDLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:manufactory attribute:NSLayoutAttributeTop multiplier:1.0 constant:0]];
-    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:manufactory attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:manufactory attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:20]];
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:manufactory attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:100-upperOffset]];
     
     //Add chip icon
+    
+    UIImageView *imgView = [[UIImageView alloc] init];
+    if(imageName)
+        imgView.image = [UIImage imageNamed:imageName];
+    imgView.backgroundColor = [UIColor clearColor];
+    imgView.contentMode = UIViewContentModeScaleAspectFit;
+    [mainScrollView addSubview: imgView];
+    [imgView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [mainScrollView  addConstraint:[NSLayoutConstraint constraintWithItem:imgView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:mainScrollView  attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+    [mainScrollView  addConstraint:[NSLayoutConstraint constraintWithItem:imgView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:mainScrollView  attribute:NSLayoutAttributeWidth multiplier:0.25 constant:0]];
+    [mainScrollView  addConstraint:[NSLayoutConstraint constraintWithItem:imgView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:imgView  attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0]];
     if (1) {
-        UIImageView *imgView = [[UIImageView alloc] init];
-        if(imageName)
-            imgView.image = [UIImage imageNamed:imageName];
-        imgView.backgroundColor = [UIColor clearColor];
-        imgView.contentMode = UIViewContentModeScaleAspectFit;
-        [mainScrollView addSubview: imgView];
-        [imgView setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [mainScrollView  addConstraint:[NSLayoutConstraint constraintWithItem:imgView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:mainScrollView  attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
-        [mainScrollView  addConstraint:[NSLayoutConstraint constraintWithItem:imgView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:mainScrollView  attribute:NSLayoutAttributeWidth multiplier:0.25 constant:0]];
-        [mainScrollView  addConstraint:[NSLayoutConstraint constraintWithItem:imgView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:imgView  attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0]];
-        [mainScrollView  addConstraint:[NSLayoutConstraint constraintWithItem:imgView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:boardIDLabel  attribute:NSLayoutAttributeTop multiplier:1.0 constant:-24]];
+       
+//        [mainScrollView  addConstraint:[NSLayoutConstraint constraintWithItem:imgView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:boardIDLabel  attribute:NSLayoutAttributeTop multiplier:1.0 constant:-24]];
     }
 
         NSString* str2Cmp = [(__bridge NSString *)boardID lowercaseString];
@@ -211,16 +246,21 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
 
         UILabel *type = [[UILabel alloc] init];
         [mainScrollView addSubview: type];
-        type.text  = [NSString stringWithFormat:@"CPU Name:        %@",typeName];
+        type.text  = [NSString stringWithFormat:@"%@",typeName];
 //         type.textColor = [UIColor whiteColor];
-        type.font = [UIFont systemFontOfSize:18];
-        type.textAlignment = NSTextAlignmentCenter;
+//        type.font = [UIFont systemFontOfSize:18];
+//        type.textAlignment = NSTextAlignmentRight;
         [type setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [mainScrollView  addConstraint:[NSLayoutConstraint constraintWithItem:type attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:mainScrollView  attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:-14]];
-        [mainScrollView  addConstraint:[NSLayoutConstraint constraintWithItem:type attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:mainScrollView  attribute:NSLayoutAttributeWidth multiplier:1 constant:0]];
+        [mainScrollView  addConstraint:[NSLayoutConstraint constraintWithItem:type attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:mainScrollView  attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:20]];
+//        [mainScrollView  addConstraint:[NSLayoutConstraint constraintWithItem:type attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:mainScrollView  attribute:NSLayoutAttributeWidth multiplier:1 constant:0]];
 //        [mainScrollView  addConstraint:[NSLayoutConstraint constraintWithItem:type attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:type  attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0]];
         [mainScrollView  addConstraint:[NSLayoutConstraint constraintWithItem:type attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:boardIDLabel  attribute:NSLayoutAttributeTop multiplier:1.0 constant:0]];
-    
+
+        [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:HWModelStrLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:20]];
+        [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:HWModelStrLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:type attribute:NSLayoutAttributeTop multiplier:1.0 constant:0]];
+        [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:platformLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:20]];
+        [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:platformLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:HWModelStrLabel attribute:NSLayoutAttributeTop multiplier:1.0 constant:0]];
+        [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:imgView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:platformLabel  attribute:NSLayoutAttributeTop multiplier:1.0 constant:-20]];
     
     if (showAds) {
         
@@ -267,6 +307,30 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     }
     
     
+    //PreLabel
+    
+    [mainScrollView addSubview:boardIDLabelPre];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:boardIDLabelPre attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:boardIDLabelPre attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:boardIDLabel attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
+    
+    [mainScrollView addSubview:manuPre];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:manuPre attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:manuPre attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:manufactory attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
+    
+
+    [mainScrollView addSubview:platformLabelPre];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:platformLabelPre attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:platformLabelPre attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:platformLabel attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
+    
+    [mainScrollView addSubview:HWPre];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:HWPre attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:HWPre attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:HWModelStrLabel attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
+    
+    [mainScrollView addSubview:CPUTypePre];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:CPUTypePre attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:CPUTypePre attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:type attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
+    
+
 //    if (showFB) {
 //        FBSDKShareButton *button = [[FBSDKShareButton alloc] init];
 //        NSString* content = isA9 ? [NSString stringWithFormat:@"The A9 chip of my iPhone 6s/6s plus is manufactured by %@. Check yours!", manufactory.text] : [NSString stringWithFormat:@"I'm using CPU Identifier to show the chip info of my iPhone. Check yours!"];
