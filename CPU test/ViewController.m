@@ -30,8 +30,9 @@ extern "C" {
 #define showFB 0
 #define appstore 1
 
-@implementation ViewController
 
+
+@implementation ViewController
 - (NSString *)platformString {
     size_t size;
     sysctlbyname("hw.machine", NULL, &size, NULL, 0);
@@ -79,10 +80,25 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
         adH = 52;
     }
     
+   
+    
+    
+    _ramUsageTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 / 1
+                                                          target:self
+                                                        selector:@selector(logMemUsage)
+                                                        userInfo:nil
+                                                         repeats:YES];
+    [[NSRunLoop mainRunLoop] addTimer:self.ramUsageTimer forMode:NSDefaultRunLoopMode];
+    [self.ramUsageTimer fire];
+    
+    
+    
+    
+    
+    
     
     NSLog(@"=====>You are in %@ areacode : %d",lang,areaCode);
     [self getIPLocation];
-    [self logMemUsage];
     void *gestalt = dlopen("/usr/lib/libMobileGestalt.dylib", RTLD_GLOBAL | RTLD_LAZY);
     $MGCopyAnswer = dlsym(gestalt, "MGCopyAnswer");
 //    NSLog(@"UDID %@",[self platformString2]);
@@ -621,35 +637,82 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     });
 }
 
-vm_size_t usedMemory(void) {
-    struct task_basic_info info;
-    mach_msg_type_number_t size = sizeof(info);
-    kern_return_t kerr = task_info(mach_task_self(), TASK_BASIC_INFO, (task_info_t)&info, &size);
-    return (kerr == KERN_SUCCESS) ? info.resident_size : 0; // size in bytes
-}
 
-vm_size_t freeMemory(void) {
-    mach_port_t host_port = mach_host_self();
-    mach_msg_type_number_t host_size = sizeof(vm_statistics_data_t) / sizeof(integer_t);
-    vm_size_t pagesize;
-    vm_statistics_data_t vm_stat;
-    
+- (NSUInteger)memoryBytesFree
+{
+    mach_port_t           host_port = mach_host_self();
+    mach_msg_type_number_t   host_size = sizeof(vm_statistics_data_t) / sizeof(integer_t);
+//    vm_size_t               pagesize;
+    vm_statistics_data_t     vm_stat;
     host_page_size(host_port, &pagesize);
-    (void) host_statistics(host_port, HOST_VM_INFO, (host_info_t)&vm_stat, &host_size);
-    return vm_stat.free_count * pagesize;
+    if (host_statistics(host_port, HOST_VM_INFO, (host_info_t)&vm_stat, &host_size) != KERN_SUCCESS) NSLog(@"Failed to fetch vm statistics");
+    natural_t  mem_free = vm_stat.free_count * (int)pagesize;
+    return mem_free;
 }
 
--(void) logMemUsage {
-    // compute memory usage and log if different by >= 100k
-    static long prevMemUsage = 0;
-    long curMemUsage = usedMemory();
-    long memUsageDiff = curMemUsage - prevMemUsage;
-    
-    if (memUsageDiff > 100000 || memUsageDiff < -100000) {
-        prevMemUsage = curMemUsage;
-        NSLog(@"Memory used %7.1f (%+5.0f), free %7.1f kb", curMemUsage/1000.0f, memUsageDiff/1000.0f, freeMemory()/1000.0f);
+- (NSUInteger) getSysInfo: (uint) typeSpecifier
+{
+    size_t size = sizeof(int);
+    int results;
+    int mib[2] = {CTL_HW, typeSpecifier};
+    sysctl(mib, 2, &results, &size, NULL, 0);
+    return (NSUInteger) results;
+}
+
+- (NSUInteger)memoryBytesTotal{
+    return [self getSysInfo:HW_PHYSMEM];
+}
+
+- (NSUInteger)memoryInactive{
+    mach_msg_type_number_t count = HOST_VM_INFO_COUNT;
+    vm_statistics_data_t vmstat;
+    if (host_statistics(mach_host_self(), HOST_VM_INFO, (host_info_t)&vmstat, &count) != KERN_SUCCESS)
+    {
+        return -1;
+    }
+    else
+    {
+        return vmstat.inactive_count *pagesize;
     }
 }
 
+- (NSUInteger)memoryActive{
+    mach_msg_type_number_t count = HOST_VM_INFO_COUNT;
+    vm_statistics_data_t vmstat;
+    if (host_statistics(mach_host_self(), HOST_VM_INFO, (host_info_t)&vmstat, &count) != KERN_SUCCESS)
+    {
+        return -1;
+    }
+    else
+    {
+        return vmstat.active_count  *pagesize;
+    }
+}
+
+- (NSUInteger)memoryWire{
+    mach_msg_type_number_t count = HOST_VM_INFO_COUNT;
+    vm_statistics_data_t vmstat;
+    if (host_statistics(mach_host_self(), HOST_VM_INFO, (host_info_t)&vmstat, &count) != KERN_SUCCESS)
+    {
+        return -1;
+    }
+    else
+    {
+        return vmstat.wire_count  * pagesize;
+    }
+}
+
+
+-(void) logMemUsage {
+    NSLog(@"Memory total %7lu  active %7lu  wire %7lu  inactive %7lu free %7lu" , (unsigned long)[self memoryBytesTotal],(unsigned long)[self memoryActive],(unsigned long)[self memoryWire],(unsigned long)[self memoryInactive],(unsigned long)[self memoryBytesFree]);
+
+}
+
+
+- (void)stopRAMUsageUpdates
+{
+    [self.ramUsageTimer invalidate];
+    self.ramUsageTimer = nil;
+}
 @end
 

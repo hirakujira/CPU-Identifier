@@ -57,7 +57,12 @@
     
     GADRequest *grequest;
     GADRequest *grequest2;
+    
+    vm_size_t pagesize;
 }
+
+@property (nonatomic, strong) NSTimer           *ramUsageTimer;
+- (void)ramUsageTimerCB:(NSNotification*)notification;
 
 @end
 
