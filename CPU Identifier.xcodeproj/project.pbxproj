@@ -410,7 +410,7 @@
 				TargetAttributes = {
 					4EB000B81BB9502800054208 = {
 						CreatedOnToolsVersion = 7.0;
-						DevelopmentTeam = Q6F5UHP863;
+						DevelopmentTeam = TN4JXG7VCX;
 					};
 					4EB000D11BB9502800054208 = {
 						CreatedOnToolsVersion = 7.0;
@@ -652,7 +652,7 @@
 					"-Obj-C",
 					"-all_load",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = tw.hiraku.cpuidentifier;
+				PRODUCT_BUNDLE_IDENTIFIER = tw.garynil.cpuidentifier;
 				PRODUCT_NAME = "CPU Identifier";
 				PROVISIONING_PROFILE = "";
 			};
@@ -684,7 +684,7 @@
 					"-Obj-C",
 					"-all_load",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = tw.hiraku.cpuidentifier;
+				PRODUCT_BUNDLE_IDENTIFIER = tw.garynil.cpuidentifier;
 				PRODUCT_NAME = "CPU Identifier";
 				PROVISIONING_PROFILE = "";
 			};
