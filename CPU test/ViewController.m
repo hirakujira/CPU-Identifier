@@ -337,7 +337,7 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
         [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:imgView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:platformLabel  attribute:NSLayoutAttributeTop multiplier:1.0 constant:-20]];
     
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:totalMem attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:20]];
-    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:totalMem attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:manufactory attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0]];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:totalMem attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:manufactory attribute:NSLayoutAttributeBottom multiplier:1.0 constant:20]];
     
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:activeMem attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:20]];
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:activeMem attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:totalMem attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0]];
@@ -796,11 +796,11 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
 
 -(void) logMemUsage {
 //    NSLog(@"Memory total %7lu  active %7lu  wire %7lu  inactive %7lu free %7lu" , (unsigned long)[self memoryBytesTotal],(unsigned long)[self memoryActive],(unsigned long)[self memoryWire],(unsigned long)[self memoryInactive],(unsigned long)[self memoryBytesFree]);
-    totalMem.text = [NSString stringWithFormat:@"%08.3lf MB",([self memoryBytesTotal]/1024/1024)];
-    activeMem.text = [NSString stringWithFormat:@"%08.3lf MB",[self memoryActive]/1024/1024];
-    wireMem.text = [NSString stringWithFormat:@"%08.3lf MB",[self memoryWire]/1024/1024];
-    inactiveMem.text = [NSString stringWithFormat:@"%08.3lf MB",[self memoryInactive]/1024/1024];
-    freeMem.text = [NSString stringWithFormat:@"%08.3lf MB",[self memoryBytesFree]/1024/1024];
+    totalMem.text = [NSString stringWithFormat:@"%.3lf MB",([self memoryBytesTotal]/1000/1000)];
+    activeMem.text = [NSString stringWithFormat:@"%.3lf MB",[self memoryActive]/1000/1000];
+    wireMem.text = [NSString stringWithFormat:@"%.3lf MB",[self memoryWire]/1000/1000];
+    inactiveMem.text = [NSString stringWithFormat:@"%.3lf MB",[self memoryInactive]/1000/1000];
+    freeMem.text = [NSString stringWithFormat:@"%.3lf MB",[self memoryBytesFree]/1000/1000];
     
 
 }
