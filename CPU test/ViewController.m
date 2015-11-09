@@ -15,6 +15,7 @@
 #import "AppDelegate.h"
 #import "AFNetworking.h"
 
+
 @import AdSupport;
 #if __cplusplus
 extern "C" {
@@ -27,6 +28,7 @@ extern "C" {
 
 #define showAds 0
 #define showFB 0
+#define appstore 1
 
 @implementation ViewController
 
@@ -49,6 +51,17 @@ extern "C" {
     free(model);
     return sDeviceModel;
 }
+
+- (NSString *)machine {
+    size_t size;
+    sysctlbyname("hw.machine", NULL, &size, NULL, 0);
+    char *model = (char*)malloc(size);
+    sysctlbyname("hw.machine", model, &size, NULL, 0);
+    NSString *sDeviceModel = [NSString stringWithCString:model encoding:NSUTF8StringEncoding];
+    free(model);
+    return sDeviceModel;
+}
+
 
 static CFStringRef (*$MGCopyAnswer)(CFStringRef);
 - (void)viewDidLoad {
@@ -91,43 +104,49 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:mainScrollView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:mainScrollView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:20]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:mainScrollView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view  attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0]];
-    
+    mainScrollView.contentInset = UIEdgeInsetsMake(-100, 0, 0, 0);
     CFStringRef boardID = (CFStringRef)$MGCopyAnswer(CFSTR("HardwarePlatform"));
     UILabel* boardIDLabel = [[UILabel alloc] init];
     UILabel* manufactory = [[UILabel alloc] init];
-    boardIDLabel.text = (__bridge NSString *)boardID;
+    boardIDLabel.text = [NSString stringWithFormat:@"CPU Type:        %@",(__bridge NSString *)boardID];
     BOOL isA9 = NO;
     manufactory.text = @"";
     if ([(__bridge NSString *)boardID isEqualToString:@"s8000"]) {
-        manufactory.text = @"Samsung";
+        manufactory.text = @"Manufactory:        Samsung";
         isA9 = YES;
         imageName = @"A9";
     }
     if ([(__bridge NSString *)boardID isEqualToString:@"s8003"]) {
-        manufactory.text = @"TSMC";
+        manufactory.text = @"Manufactory:        TSMC";
         isA9 = YES;
         imageName = @"A9";
     }
 
     
-    NSString* str2Cmp = [(__bridge NSString *)boardID lowercaseString];
-    if ([str2Cmp hasPrefix:@"s5l8960"] || [str2Cmp hasPrefix:@"s5l8965"]){
-        imageName = @"A7";
-    }else if ([str2Cmp hasPrefix:@"t7000"]){
-        imageName = @"A8";
-    }else if ([str2Cmp hasPrefix:@"t7001"]){
-        imageName = @"A8X";
-    }else if ([str2Cmp hasPrefix:@"s5l8950"]){
-        imageName = @"A6";
-    }else if ([str2Cmp hasPrefix:@"S5L8955"]){
-        imageName = @"A6X";
-    }else if ([str2Cmp hasPrefix:@"s5l8940"] || [str2Cmp hasPrefix:@"s5l8942"] ){
-        imageName = @"A5";
-    }else if ([str2Cmp hasPrefix:@"s5l8945"]){
-        imageName = @"A5X";
-    }else if ([str2Cmp hasPrefix:@"s5l8930"]){
-        imageName = @"A4";
+    if (!appstore) {
+        NSString* str2Cmp = [(__bridge NSString *)boardID lowercaseString];
+        if ([str2Cmp hasPrefix:@"s5l8960"] || [str2Cmp hasPrefix:@"s5l8965"]){
+            imageName = @"A7";
+        }else if ([str2Cmp hasPrefix:@"t7000"]){
+            imageName = @"A8";
+        }else if ([str2Cmp hasPrefix:@"t7001"]){
+            imageName = @"A8X";
+        }else if ([str2Cmp hasPrefix:@"s5l8950"]){
+            imageName = @"A6";
+        }else if ([str2Cmp hasPrefix:@"S5L8955"]){
+            imageName = @"A6X";
+        }else if ([str2Cmp hasPrefix:@"s5l8940"] || [str2Cmp hasPrefix:@"s5l8942"] ){
+            imageName = @"A5";
+        }else if ([str2Cmp hasPrefix:@"s5l8945"]){
+            imageName = @"A5X";
+        }else if ([str2Cmp hasPrefix:@"s5l8930"]){
+            imageName = @"A4";
+        }
     }
+    else {
+        imageName = @"CPU";
+    }
+    
     
     NSString *adId = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
     NSString *url = @"http://demo.hiraku.tw/CPUIdentifier/stat.php";
@@ -137,27 +156,71 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     //    [mainScrollView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [boardIDLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
     [manufactory setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [boardIDLabel setFont:[UIFont systemFontOfSize:36]];
+    [boardIDLabel setFont:[UIFont systemFontOfSize:18]];
     //    [boardIDLabel.text]
     [mainScrollView addSubview:boardIDLabel];
     [mainScrollView addSubview:manufactory];
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:boardIDLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
-    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:boardIDLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:-upperOffset]];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:boardIDLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:manufactory attribute:NSLayoutAttributeTop multiplier:1.0 constant:0]];
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:manufactory attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
-    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:manufactory attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:50-upperOffset]];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:manufactory attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:100-upperOffset]];
     
     //Add chip icon
-    UIImageView *imgView = [[UIImageView alloc] init];
-    if(imageName)
-        imgView.image = [UIImage imageNamed:imageName];
-    imgView.backgroundColor = [UIColor clearColor];
-    imgView.contentMode = UIViewContentModeScaleAspectFit;
-    [mainScrollView addSubview: imgView];
-    [imgView setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [mainScrollView  addConstraint:[NSLayoutConstraint constraintWithItem:imgView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:mainScrollView  attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
-    [mainScrollView  addConstraint:[NSLayoutConstraint constraintWithItem:imgView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:mainScrollView  attribute:NSLayoutAttributeWidth multiplier:0.4 constant:0]];
-    [mainScrollView  addConstraint:[NSLayoutConstraint constraintWithItem:imgView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:imgView  attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0]];
-    [mainScrollView  addConstraint:[NSLayoutConstraint constraintWithItem:imgView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:boardIDLabel  attribute:NSLayoutAttributeTop multiplier:1.0 constant:-24]];
+    if (1) {
+        UIImageView *imgView = [[UIImageView alloc] init];
+        if(imageName)
+            imgView.image = [UIImage imageNamed:imageName];
+        imgView.backgroundColor = [UIColor clearColor];
+        imgView.contentMode = UIViewContentModeScaleAspectFit;
+        [mainScrollView addSubview: imgView];
+        [imgView setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [mainScrollView  addConstraint:[NSLayoutConstraint constraintWithItem:imgView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:mainScrollView  attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+        [mainScrollView  addConstraint:[NSLayoutConstraint constraintWithItem:imgView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:mainScrollView  attribute:NSLayoutAttributeWidth multiplier:0.25 constant:0]];
+        [mainScrollView  addConstraint:[NSLayoutConstraint constraintWithItem:imgView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:imgView  attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0]];
+        [mainScrollView  addConstraint:[NSLayoutConstraint constraintWithItem:imgView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:boardIDLabel  attribute:NSLayoutAttributeTop multiplier:1.0 constant:-24]];
+    }
+
+        NSString* str2Cmp = [(__bridge NSString *)boardID lowercaseString];
+        NSString* typeName;
+        if ([str2Cmp isEqualToString:@"s8000"]) {
+            typeName = @"A9";
+        }
+        else if ([str2Cmp isEqualToString:@"s8003"]) {
+            typeName = @"A9";
+        }
+        else if ([str2Cmp isEqualToString:@"s8001"]) {
+            typeName = @"A9X";
+        }
+        else if ([str2Cmp hasPrefix:@"s5l8960"] || [str2Cmp hasPrefix:@"s5l8965"]){
+            typeName = @"A7";
+        }else if ([str2Cmp hasPrefix:@"t7000"]){
+            typeName = @"A8";
+        }else if ([str2Cmp hasPrefix:@"t7001"]){
+            typeName = @"A8X";
+        }else if ([str2Cmp hasPrefix:@"s5l8950"]){
+            typeName = @"A6";
+        }else if ([str2Cmp hasPrefix:@"S5L8955"]){
+            typeName = @"A6X";
+        }else if ([str2Cmp hasPrefix:@"s5l8940"] || [str2Cmp hasPrefix:@"s5l8942"] ){
+            typeName = @"A5";
+        }else if ([str2Cmp hasPrefix:@"s5l8945"]){
+            typeName = @"A5X";
+        }else if ([str2Cmp hasPrefix:@"s5l8930"]){
+            typeName = @"A4";
+        }
+
+        UILabel *type = [[UILabel alloc] init];
+        [mainScrollView addSubview: type];
+        type.text  = [NSString stringWithFormat:@"CPU Name:        %@",typeName];
+//         type.textColor = [UIColor whiteColor];
+        type.font = [UIFont systemFontOfSize:18];
+        type.textAlignment = NSTextAlignmentCenter;
+        [type setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [mainScrollView  addConstraint:[NSLayoutConstraint constraintWithItem:type attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:mainScrollView  attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:-14]];
+        [mainScrollView  addConstraint:[NSLayoutConstraint constraintWithItem:type attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:mainScrollView  attribute:NSLayoutAttributeWidth multiplier:1 constant:0]];
+//        [mainScrollView  addConstraint:[NSLayoutConstraint constraintWithItem:type attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:type  attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0]];
+        [mainScrollView  addConstraint:[NSLayoutConstraint constraintWithItem:type attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:boardIDLabel  attribute:NSLayoutAttributeTop multiplier:1.0 constant:0]];
+    
     
     if (showAds) {
         
@@ -204,24 +267,24 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     }
     
     
-    if (showFB) {
-        FBSDKShareButton *button = [[FBSDKShareButton alloc] init];
-        NSString* content = isA9 ? [NSString stringWithFormat:@"The A9 chip of my iPhone 6s/6s plus is manufactured by %@. Check yours!", manufactory.text] : [NSString stringWithFormat:@"I'm using CPU Identifier to show the chip info of my iPhone. Check yours!"];
-        FBSDKShareLinkContent *fbcontent= [[FBSDKShareLinkContent alloc] init];
-        fbcontent.contentURL = [NSURL URLWithString:@"http://demo.hiraku.tw/CPUIdentifier/index.html"];
-        fbcontent.contentTitle = @"Check out the chip manufactory of your iPhone 6s/6s Plus!";
-        fbcontent.contentDescription = content;
-        button.shareContent = fbcontent;
-        [mainScrollView addSubview:button];
-        [button setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
-        [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:100-upperOffset]];
-    }
+//    if (showFB) {
+//        FBSDKShareButton *button = [[FBSDKShareButton alloc] init];
+//        NSString* content = isA9 ? [NSString stringWithFormat:@"The A9 chip of my iPhone 6s/6s plus is manufactured by %@. Check yours!", manufactory.text] : [NSString stringWithFormat:@"I'm using CPU Identifier to show the chip info of my iPhone. Check yours!"];
+//        FBSDKShareLinkContent *fbcontent= [[FBSDKShareLinkContent alloc] init];
+//        fbcontent.contentURL = [NSURL URLWithString:@"http://demo.hiraku.tw/CPUIdentifier/index.html"];
+//        fbcontent.contentTitle = @"Check out the chip manufactory of your iPhone 6s/6s Plus!";
+//        fbcontent.contentDescription = content;
+//        button.shareContent = fbcontent;
+//        [mainScrollView addSubview:button];
+//        [button setTranslatesAutoresizingMaskIntoConstraints:NO];
+//        [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+//        [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:button attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:100-upperOffset]];
+//    }
     
     UIButton* linkButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [linkButton setBackgroundColor:[UIColor colorWithRed:0.188 green:0.822 blue:0.517 alpha:1]];
     [linkButton.layer setCornerRadius:7];
-    [linkButton setTitle:@"More Statistics" forState:UIControlStateNormal];
+    [linkButton setTitle:@"About" forState:UIControlStateNormal];
     [linkButton.titleLabel setFont:[UIFont systemFontOfSize:20]];
     linkButton.translatesAutoresizingMaskIntoConstraints = NO;
     [mainScrollView addSubview:linkButton];
@@ -230,7 +293,7 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:linkButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:200.0f]];
     [linkButton addTarget:self action:@selector(buttonPressed) forControlEvents:UIControlEventTouchUpInside];
 
-    NSString *urlString = @"http://demo.hiraku.tw/CPUIdentifier/chart.php";
+    NSString *urlString = @"http://demo.hiraku.tw/CPUIdentifier/chart-store.php";
     //urlString = @"http://demo.hiraku.tw/CPUIdentifier/region/TA.php";
     NSURL *url_demo = [NSURL URLWithString:urlString];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url_demo];
@@ -300,7 +363,7 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
 
 
 - (void)buttonPressed {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://demo.hiraku.tw/CPUIdentifier/chart2.php"]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://demo.hiraku.tw/CPUIdentifier/chart2-store.php"]];
 }
 
 
