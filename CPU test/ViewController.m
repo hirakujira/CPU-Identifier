@@ -156,6 +156,14 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     [mainScrollView addSubview:inactiveMemTitle];
     [mainScrollView addSubview:freeMemTitle];
     
+    
+    totalMem.text = @"0000.000";
+    activeMem.text = @"0000.000";
+    wireMem.text = @"0000.000";
+    inactiveMem.text = @"0000.000";
+    freeMem.text = @"0000.000";
+    
+    
     totalMemTitle.textAlignment = NSTextAlignmentRight;
     activeMemTitle.textAlignment = NSTextAlignmentRight;
     wireMemTitle.textAlignment = NSTextAlignmentRight;
@@ -585,10 +593,6 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
 }
 
 
-- (void)viewWillAppear:(BOOL)animated{
-    
-    
-}
 
 - (void)getIPLocation{
     NSMutableURLRequest *requestHTTP = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://ip-api.com/json"]
@@ -792,11 +796,11 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
 
 -(void) logMemUsage {
 //    NSLog(@"Memory total %7lu  active %7lu  wire %7lu  inactive %7lu free %7lu" , (unsigned long)[self memoryBytesTotal],(unsigned long)[self memoryActive],(unsigned long)[self memoryWire],(unsigned long)[self memoryInactive],(unsigned long)[self memoryBytesFree]);
-    totalMem.text = [NSString stringWithFormat:@"%05.3lf",([self memoryBytesTotal])];
-    activeMem.text = [NSString stringWithFormat:@"%05.3lf",[self memoryActive]/1024/1024];
-    wireMem.text = [NSString stringWithFormat:@"%05.3lf",[self memoryWire]/1024/1024];
-    inactiveMem.text = [NSString stringWithFormat:@"%05.3lf",[self memoryInactive]/1024/1024];
-    freeMem.text = [NSString stringWithFormat:@"%05.3lf",[self memoryBytesFree]/1024/1024];
+    totalMem.text = [NSString stringWithFormat:@"%08.3lf MB",([self memoryBytesTotal]/1024/1024)];
+    activeMem.text = [NSString stringWithFormat:@"%08.3lf MB",[self memoryActive]/1024/1024];
+    wireMem.text = [NSString stringWithFormat:@"%08.3lf MB",[self memoryWire]/1024/1024];
+    inactiveMem.text = [NSString stringWithFormat:@"%08.3lf MB",[self memoryInactive]/1024/1024];
+    freeMem.text = [NSString stringWithFormat:@"%08.3lf MB",[self memoryBytesFree]/1024/1024];
     
 
 }
