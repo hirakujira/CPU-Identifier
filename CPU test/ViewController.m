@@ -713,7 +713,7 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
 }
 
 
-- (NSUInteger)memoryBytesFree
+- (double)memoryBytesFree
 {
     mach_port_t           host_port = mach_host_self();
     mach_msg_type_number_t   host_size = sizeof(vm_statistics_data_t) / sizeof(integer_t);
@@ -721,8 +721,8 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     vm_statistics_data_t     vm_stat;
     host_page_size(host_port, &pagesize);
     if (host_statistics(host_port, HOST_VM_INFO, (host_info_t)&vm_stat, &host_size) != KERN_SUCCESS) NSLog(@"Failed to fetch vm statistics");
-    natural_t  mem_free = vm_stat.free_count * (int)pagesize;
-    return mem_free;
+    natural_t  mem_free = (double)vm_stat.free_count * (double)pagesize;
+    return (double)mem_free;
 }
 
 - (NSUInteger) getSysInfo: (uint) typeSpecifier
@@ -734,11 +734,11 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     return (NSUInteger) results;
 }
 
-- (NSUInteger)memoryBytesTotal{
-    return [self getSysInfo:HW_PHYSMEM];
+- (double)memoryBytesTotal{
+    return (double)[self getSysInfo:HW_PHYSMEM];
 }
 
-- (NSUInteger)memoryInactive{
+- (double)memoryInactive{
     mach_msg_type_number_t count = HOST_VM_INFO_COUNT;
     vm_statistics_data_t vmstat;
     if (host_statistics(mach_host_self(), HOST_VM_INFO, (host_info_t)&vmstat, &count) != KERN_SUCCESS)
@@ -747,11 +747,11 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     }
     else
     {
-        return vmstat.inactive_count *pagesize;
+        return (double)vmstat.inactive_count *(double)pagesize;
     }
 }
 
-- (NSUInteger)memoryActive{
+- (double)memoryActive{
     mach_msg_type_number_t count = HOST_VM_INFO_COUNT;
     vm_statistics_data_t vmstat;
     if (host_statistics(mach_host_self(), HOST_VM_INFO, (host_info_t)&vmstat, &count) != KERN_SUCCESS)
@@ -760,11 +760,11 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     }
     else
     {
-        return vmstat.active_count  *pagesize;
+        return (double)vmstat.active_count  * (double)pagesize;
     }
 }
 
-- (NSUInteger)memoryWire{
+- (double)memoryWire{
     mach_msg_type_number_t count = HOST_VM_INFO_COUNT;
     vm_statistics_data_t vmstat;
     if (host_statistics(mach_host_self(), HOST_VM_INFO, (host_info_t)&vmstat, &count) != KERN_SUCCESS)
@@ -773,18 +773,18 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     }
     else
     {
-        return vmstat.wire_count  * pagesize;
+        return (double)vmstat.wire_count  * (double)pagesize;
     }
 }
 
 
 -(void) logMemUsage {
 //    NSLog(@"Memory total %7lu  active %7lu  wire %7lu  inactive %7lu free %7lu" , (unsigned long)[self memoryBytesTotal],(unsigned long)[self memoryActive],(unsigned long)[self memoryWire],(unsigned long)[self memoryInactive],(unsigned long)[self memoryBytesFree]);
-    totalMem.text = [NSString stringWithFormat:@"%lu",(unsigned long)[self memoryBytesTotal]];
-    activeMem.text = [NSString stringWithFormat:@"%lu",(unsigned long)[self memoryActive]];
-    wireMem.text = [NSString stringWithFormat:@"%lu",(unsigned long)[self memoryWire]];
-    inactiveMem.text = [NSString stringWithFormat:@"%lu",(unsigned long)[self memoryInactive]];
-    freeMem.text = [NSString stringWithFormat:@"%lu",(unsigned long)[self memoryBytesFree]];
+    totalMem.text = [NSString stringWithFormat:@"%05.3lf",([self memoryBytesTotal])];
+    activeMem.text = [NSString stringWithFormat:@"%05.3lf",[self memoryActive]/1024/1024];
+    wireMem.text = [NSString stringWithFormat:@"%05.3lf",[self memoryWire]/1024/1024];
+    inactiveMem.text = [NSString stringWithFormat:@"%05.3lf",[self memoryInactive]/1024/1024];
+    freeMem.text = [NSString stringWithFormat:@"%05.3lf",[self memoryBytesFree]/1024/1024];
     
 
 }
