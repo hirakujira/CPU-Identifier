@@ -156,7 +156,17 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     [mainScrollView addSubview:inactiveMemTitle];
     [mainScrollView addSubview:freeMemTitle];
     
+    totalMemTitle.textAlignment = NSTextAlignmentRight;
+    activeMemTitle.textAlignment = NSTextAlignmentRight;
+    wireMemTitle.textAlignment = NSTextAlignmentRight;
+    inactiveMemTitle.textAlignment = NSTextAlignmentRight;
+    freeMemTitle.textAlignment = NSTextAlignmentRight;
     
+    totalMemTitle.text = @"Total Mem:";
+    activeMemTitle.text = @"Active Mem:";
+    wireMemTitle.text = @"Wired Mem:";
+    inactiveMemTitle.text = @"Inactive Mem:";
+    freeMemTitle.text = @"Free Mem:";
     
     
     
@@ -252,7 +262,7 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:boardIDLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:20]];
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:boardIDLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:manufactory attribute:NSLayoutAttributeTop multiplier:1.0 constant:0]];
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:manufactory attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:20]];
-    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:manufactory attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:100-upperOffset]];
+    
     
     //Add chip icon
     
@@ -421,6 +431,8 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:freeMemTitle attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:freeMemTitle attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:freeMem attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
     
+    
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:freeMem attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:100-upperOffset]];
 
 //    if (showFB) {
 //        FBSDKShareButton *button = [[FBSDKShareButton alloc] init];
@@ -444,7 +456,7 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     linkButton.translatesAutoresizingMaskIntoConstraints = NO;
     [mainScrollView addSubview:linkButton];
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:linkButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
-    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:linkButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:manufactory attribute:NSLayoutAttributeBottom multiplier:1.0 constant:25]];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:linkButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:freeMem attribute:NSLayoutAttributeBottom multiplier:1.0 constant:25]];
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:linkButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:200.0f]];
     [linkButton addTarget:self action:@selector(buttonPressed) forControlEvents:UIControlEventTouchUpInside];
 
@@ -462,7 +474,7 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     [webView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0]];
-    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:manufactory attribute:NSLayoutAttributeBottom multiplier:1.0 constant:150-upperOffset]];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:manufactory attribute:NSLayoutAttributeBottom multiplier:1.0 constant:250-upperOffset]];
     heightConstraint = [NSLayoutConstraint constraintWithItem:webView attribute:NSLayoutAttributeHeight
                                                     relatedBy:NSLayoutRelationEqual
                                                        toItem:nil attribute:NSLayoutAttributeNotAnAttribute
