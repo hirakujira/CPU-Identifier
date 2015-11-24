@@ -179,19 +179,7 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     
     
     
-    BOOL isA9 = NO;
-    manufactory.text = @"";
-    if ([(__bridge NSString *)boardID isEqualToString:@"s8000"]) {
-        manufactory.text = @"Samsung";
-        isA9 = YES;
-        imageName = @"A9";
-    }
-    if ([(__bridge NSString *)boardID isEqualToString:@"s8003"]) {
-        manufactory.text = @"TSMC";
-        isA9 = YES;
-        imageName = @"A9";
-    }
-
+    
     
     if (!appstore) {
         NSString* str2Cmp = [(__bridge NSString *)boardID lowercaseString];
@@ -271,7 +259,22 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:boardIDLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:manufactory attribute:NSLayoutAttributeTop multiplier:1.0 constant:0]];
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:manufactory attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:20]];
     
-    
+    BOOL isA9 = NO;
+    manufactory.text = @"";
+    if ([(__bridge NSString *)boardID isEqualToString:@"s8000"]) {
+        manufactory.text = @"Samsung";
+        isA9 = YES;
+//        imageName = @"A9";
+    }
+    else if ([(__bridge NSString *)boardID isEqualToString:@"s8003"]) {
+        manufactory.text = @"TSMC";
+        isA9 = YES;
+//        imageName = @"A9";
+    }
+    else {
+        manuPre.hidden = YES;
+    }
+
     //Add chip icon
     
     UIImageView *imgView = [[UIImageView alloc] init];
@@ -440,7 +443,7 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:freeMemTitle attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:freeMem attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
     
     
-    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:freeMem attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:100-upperOffset]];
+    [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:freeMem attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:150-upperOffset]];
 
 //    if (showFB) {
 //        FBSDKShareButton *button = [[FBSDKShareButton alloc] init];
@@ -488,7 +491,8 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
                                                        toItem:nil attribute:NSLayoutAttributeNotAnAttribute
                                                    multiplier:0.0f constant:10.0f];
     [mainScrollView addConstraint:heightConstraint];
-
+    manufactory.hidden = YES;
+    manuPre.hidden = YES;
     
 //    mainScrollView.contentSize = CGSizeMake(self.view.frame.size.width, SCREEN_HEIGHT + 1100 - upperOffset);
 }

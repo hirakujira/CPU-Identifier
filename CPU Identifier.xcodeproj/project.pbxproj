@@ -48,6 +48,10 @@
 		4EEB29381BBBA27B006EB7DB /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EEB292D1BBBA27B006EB7DB /* AFURLRequestSerialization.m */; };
 		4EEB29391BBBA27B006EB7DB /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EEB292F1BBBA27B006EB7DB /* AFURLResponseSerialization.m */; };
 		4EEB293A1BBBA27B006EB7DB /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EEB29311BBBA27B006EB7DB /* AFURLSessionManager.m */; };
+		CA683D041BF834A30049DEC7 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA683CEC1BF816540049DEC7 /* NotificationCenter.framework */; };
+		CA683D081BF834A30049DEC7 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CA683D071BF834A30049DEC7 /* TodayViewController.m */; };
+		CA683D0B1BF834A30049DEC7 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA683D091BF834A30049DEC7 /* MainInterface.storyboard */; };
+		CA683D0F1BF834A30049DEC7 /* CPUIdentifierToday.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = CA683D031BF834A30049DEC7 /* CPUIdentifierToday.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CA73B7F91BCC1EE900EC3048 /* chartbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = CA73B7F81BCC1EE900EC3048 /* chartbutton.png */; };
 		CA8FD6A41BD8CB8F00E4E1A6 /* CPU.png in Resources */ = {isa = PBXBuildFile; fileRef = CA8FD6A31BD8CB8F00E4E1A6 /* CPU.png */; };
 		CA8FFD551BB99DF400093C55 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA8FFD541BB99DF300093C55 /* FBSDKShareKit.framework */; };
@@ -71,7 +75,28 @@
 			remoteGlobalIDString = 4EB000B81BB9502800054208;
 			remoteInfo = "CPU test";
 		};
+		CA683D0D1BF834A30049DEC7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4EB000B11BB9502800054208 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CA683D021BF834A30049DEC7;
+			remoteInfo = CPUIdentifierToday;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CA683CFC1BF816540049DEC7 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				CA683D0F1BF834A30049DEC7 /* CPUIdentifierToday.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		4E71C3321BB95AD6002B0FF1 /* MobileGestalt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileGestalt.h; sourceTree = "<group>"; };
@@ -136,6 +161,12 @@
 		4EEB292F1BBBA27B006EB7DB /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFURLResponseSerialization.m; path = AFNetWorking/AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		4EEB29301BBBA27B006EB7DB /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFURLSessionManager.h; path = AFNetWorking/AFURLSessionManager.h; sourceTree = "<group>"; };
 		4EEB29311BBBA27B006EB7DB /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFURLSessionManager.m; path = AFNetWorking/AFURLSessionManager.m; sourceTree = "<group>"; };
+		CA683CEC1BF816540049DEC7 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		CA683D031BF834A30049DEC7 /* CPUIdentifierToday.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CPUIdentifierToday.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA683D061BF834A30049DEC7 /* TodayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodayViewController.h; sourceTree = "<group>"; };
+		CA683D071BF834A30049DEC7 /* TodayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodayViewController.m; sourceTree = "<group>"; };
+		CA683D0A1BF834A30049DEC7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		CA683D0C1BF834A30049DEC7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA73B7F81BCC1EE900EC3048 /* chartbutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chartbutton.png; sourceTree = "<group>"; };
 		CA8FD6A31BD8CB8F00E4E1A6 /* CPU.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CPU.png; sourceTree = "<group>"; };
 		CA8FFD541BB99DF300093C55 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
@@ -190,6 +221,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA683D001BF834A30049DEC7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CA683D041BF834A30049DEC7 /* NotificationCenter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,6 +293,8 @@
 				4EB000BB1BB9502800054208 /* CPU test */,
 				4EB000D51BB9502800054208 /* CPU testTests */,
 				4EB000E01BB9502800054208 /* CPU testUITests */,
+				CA683D051BF834A30049DEC7 /* CPUIdentifierToday */,
+				CA683CEB1BF816540049DEC7 /* Frameworks */,
 				4EB000BA1BB9502800054208 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -264,6 +305,7 @@
 				4EB000B91BB9502800054208 /* CPU Identifier.app */,
 				4EB000D21BB9502800054208 /* CPU Identifier.xctest */,
 				4EB000DD1BB9502800054208 /* CPU Identifier.xctest */,
+				CA683D031BF834A30049DEC7 /* CPUIdentifierToday.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -343,6 +385,25 @@
 			name = AFNetworking;
 			sourceTree = "<group>";
 		};
+		CA683CEB1BF816540049DEC7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CA683CEC1BF816540049DEC7 /* NotificationCenter.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CA683D051BF834A30049DEC7 /* CPUIdentifierToday */ = {
+			isa = PBXGroup;
+			children = (
+				CA683D061BF834A30049DEC7 /* TodayViewController.h */,
+				CA683D071BF834A30049DEC7 /* TodayViewController.m */,
+				CA683D091BF834A30049DEC7 /* MainInterface.storyboard */,
+				CA683D0C1BF834A30049DEC7 /* Info.plist */,
+			);
+			path = CPUIdentifierToday;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -353,10 +414,12 @@
 				4EB000B51BB9502800054208 /* Sources */,
 				4EB000B61BB9502800054208 /* Frameworks */,
 				4EB000B71BB9502800054208 /* Resources */,
+				CA683CFC1BF816540049DEC7 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				CA683D0E1BF834A30049DEC7 /* PBXTargetDependency */,
 			);
 			name = "CPU Identifier";
 			productName = "CPU test";
@@ -399,6 +462,23 @@
 			productReference = 4EB000DD1BB9502800054208 /* CPU Identifier.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		CA683D021BF834A30049DEC7 /* CPUIdentifierToday */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CA683D101BF834A30049DEC7 /* Build configuration list for PBXNativeTarget "CPUIdentifierToday" */;
+			buildPhases = (
+				CA683CFF1BF834A30049DEC7 /* Sources */,
+				CA683D001BF834A30049DEC7 /* Frameworks */,
+				CA683D011BF834A30049DEC7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CPUIdentifierToday;
+			productName = CPUIdentifierToday;
+			productReference = CA683D031BF834A30049DEC7 /* CPUIdentifierToday.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -420,6 +500,10 @@
 						CreatedOnToolsVersion = 7.0;
 						TestTargetID = 4EB000B81BB9502800054208;
 					};
+					CA683D021BF834A30049DEC7 = {
+						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = Q6F5UHP863;
+					};
 				};
 			};
 			buildConfigurationList = 4EB000B41BB9502800054208 /* Build configuration list for PBXProject "CPU Identifier" */;
@@ -438,6 +522,7 @@
 				4EB000B81BB9502800054208 /* CPU Identifier */,
 				4EB000D11BB9502800054208 /* CPU IdentifierTests */,
 				4EB000DC1BB9502800054208 /* CPU IdentifierUITests */,
+				CA683D021BF834A30049DEC7 /* CPUIdentifierToday */,
 			);
 		};
 /* End PBXProject section */
@@ -467,6 +552,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA683D011BF834A30049DEC7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CA683D0B1BF834A30049DEC7 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -508,6 +601,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CA683CFF1BF834A30049DEC7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CA683D081BF834A30049DEC7 /* TodayViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -520,6 +621,11 @@
 			isa = PBXTargetDependency;
 			target = 4EB000B81BB9502800054208 /* CPU Identifier */;
 			targetProxy = 4EB000DE1BB9502800054208 /* PBXContainerItemProxy */;
+		};
+		CA683D0E1BF834A30049DEC7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CA683D021BF834A30049DEC7 /* CPUIdentifierToday */;
+			targetProxy = CA683D0D1BF834A30049DEC7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -538,6 +644,14 @@
 				4EB000CB1BB9502800054208 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		CA683D091BF834A30049DEC7 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CA683D0A1BF834A30049DEC7 /* Base */,
+			);
+			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -652,7 +766,7 @@
 					"-Obj-C",
 					"-all_load",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = tw.garynil.cpuidentifier;
+				PRODUCT_BUNDLE_IDENTIFIER = tw.hiraku.cpuidentifier;
 				PRODUCT_NAME = "CPU Identifier";
 				PROVISIONING_PROFILE = "";
 			};
@@ -684,7 +798,7 @@
 					"-Obj-C",
 					"-all_load",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = tw.garynil.cpuidentifier;
+				PRODUCT_BUNDLE_IDENTIFIER = tw.hiraku.cpuidentifier;
 				PRODUCT_NAME = "CPU Identifier";
 				PROVISIONING_PROFILE = "";
 			};
@@ -738,6 +852,35 @@
 			};
 			name = Release;
 		};
+		CA683D111BF834A30049DEC7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = CPUIdentifierToday/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = tw.hiraku.cpuidentifier.CPUIdentifierToday;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		CA683D121BF834A30049DEC7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = CPUIdentifierToday/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = tw.hiraku.cpuidentifier.CPUIdentifierToday;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -773,6 +916,15 @@
 			buildConfigurations = (
 				4EB000ED1BB9502800054208 /* Debug */,
 				4EB000EE1BB9502800054208 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CA683D101BF834A30049DEC7 /* Build configuration list for PBXNativeTarget "CPUIdentifierToday" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CA683D111BF834A30049DEC7 /* Debug */,
+				CA683D121BF834A30049DEC7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
