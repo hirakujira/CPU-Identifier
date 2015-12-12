@@ -7,10 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <GoogleMobileAds/GADInterstitial.h>
-#import "VpadnBanner.h"
-#import "VpadnInterstitial.h"
-#import <FBSDKShareKit/FBSDKShareKit.h>
+
 
 #define IS_IPAD (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 #define IS_IPHONE (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
@@ -34,19 +31,8 @@
 #define vponIDBannerJ @"8a808182442a711e0144347d7c4509f7"
 #define vponIDAll @"8a8081824ff371e00150144f202614e0"
 
-#define testiPhoneID1 @"037de1273f4e3317e9328d7e4594b2cf"  // Gary's iPhone 5s
-#define testiPhoneID2 @"c95365b957f7ce41b737b489eb3b538ax"  // Hiraku's iPhone 6+
-#define testiPhoneID3 @"464caf0bee75ad7989d2403994944d81"  // Gary's iPhone 4
-#define testiPhoneVID1 @"B1E3906D-2482-4CA6-A6FD-E259A570592D"  // Gary's iPhone 5s for Vpad
-#define testiPhoneVID2 @"5499571D-4A59-418A-A5FF-CCD1FD757EFC"  // Gary's iPhone 4 for Vpad
-@import GoogleMobileAds;
-
-@interface ViewController : UIViewController <VpadnBannerDelegate, VpadnInterstitialDelegate ,UIWebViewDelegate>
+@interface ViewController : UIViewController <UIWebViewDelegate>
 {
-    VpadnBanner*    vpadnAd; // 宣告使用VpadnBanner廣告
-    VpadnInterstitial*    vpadnInterstitial; // 宣告使用Vpadn插屏廣告
-    GADInterstitial *interstitial;
-    GADBannerView *gADBannerView;
     int areaCode ,upperOffset;
     NSString *lang;
     NSString* region;
@@ -54,9 +40,6 @@
     UIScrollView *mainScrollView;
     UIWebView *webView;
     NSLayoutConstraint *heightConstraint;
-    
-    GADRequest *grequest;
-    GADRequest *grequest2;
     
     vm_size_t pagesize;
     

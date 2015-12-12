@@ -11,7 +11,7 @@
 #include <sys/resource.h>
 #include <sys/vm.h>
 #include <dlfcn.h>
-#import "MobileGestalt.h"
+//#import "MobileGestalt.h"
 #import "AppDelegate.h"
 #import "AFNetworking.h"
 #import <mach/mach.h>
@@ -92,13 +92,6 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     [self.ramUsageTimer fire];
     
     
-    
-    
-    
-    
-    
-    NSLog(@"=====>You are in %@ areacode : %d",lang,areaCode);
-    [self getIPLocation];
     void *gestalt = dlopen("/usr/lib/libMobileGestalt.dylib", RTLD_GLOBAL | RTLD_LAZY);
     $MGCopyAnswer = dlsym(gestalt, "MGCopyAnswer");
 //    NSLog(@"UDID %@",[self platformString2]);
@@ -205,10 +198,8 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
         imageName = @"CPU";
     }
     
-    
-    NSString *adId = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
     NSString *url = @"http://demo.hiraku.tw/CPUIdentifier/stat.php";
-    NSString *requestStr = [[NSString alloc] initWithFormat:@"%@?adid=%@&device_type=%@&model=%@&region=%@&chip=%@",url,adId,[self platformString], (__bridge NSString*)(CFStringRef)$MGCopyAnswer(kMGModelNumber), (__bridge NSString*)(CFStringRef)$MGCopyAnswer(kMGRegionCode),boardIDLabel.text];
+    NSString *requestStr = [[NSString alloc] initWithFormat:@"%@?adid=%@&device_type=%@&model=%@&region=%@&chip=%@",url,[[[UIDevice currentDevice] identifierForVendor] UUIDString],[self platformString], (__bridge NSString*)(CFStringRef)$MGCopyAnswer(CFSTR("ModelNumber")), (__bridge NSString*)(CFStringRef)$MGCopyAnswer(CFSTR("RegionCode")),boardIDLabel.text];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[requestStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10.0];
      NSData *receivedData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
     //    [mainScrollView setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -353,50 +344,6 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:freeMem attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:mainScrollView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:20]];
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:freeMem attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:inactiveMem attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0]];
-    
-    if (showAds) {
-        
-        //Add google ads
-        gADBannerView = [[GADBannerView alloc] init];// 調整廣告的位置
-        [gADBannerView setTranslatesAutoresizingMaskIntoConstraints:NO];
-        gADBannerView.backgroundColor = [UIColor blackColor];
-        gADBannerView.adUnitID = AdmobIDBtn;
-        
-        grequest = [GADRequest request];
-        grequest.testDevices = @[
-                                 kGADSimulatorID,
-                                 kDFPSimulatorID,
-                                 ];
-        gADBannerView.rootViewController = self;
-        
-        [self.view  addSubview:gADBannerView];
-        [self.view  addConstraint:[NSLayoutConstraint constraintWithItem:gADBannerView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view  attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
-        [self.view  addConstraint:[NSLayoutConstraint constraintWithItem:gADBannerView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view  attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0]];
-        [self.view  addConstraint:[NSLayoutConstraint constraintWithItem:gADBannerView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view  attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0]];
-        [gADBannerView setHidden:YES];
-        
-        [self.view  addConstraint:[NSLayoutConstraint constraintWithItem:gADBannerView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0 constant:adH]];
-        
-        interstitial = [[GADInterstitial alloc] initWithAdUnitID:AdmobIDAll];
-        
-        grequest2 = [GADRequest request];
-        // Requests test ads on test devices.
-        grequest2.testDevices = @[
-                                  testiPhoneID1,
-                                  testiPhoneID2,
-                                  kGADSimulatorID,
-                                  kDFPSimulatorID,
-                                  ];
-        
-        // 設定廣告位置
-        CGPoint origin = CGPointMake(0.0,SCREEN_HEIGHT - CGSizeFromVpadnAdSize(VpadnAdSizeSmartBannerPortrait).height);
-        vpadnAd = [[VpadnBanner alloc] initWithAdSize:VpadnAdSizeSmartBannerPortrait origin:origin];  // 初始化Banner物件
-        vpadnAd.strBannerId = vponIDBanner;   // 填入您的BannerId
-        vpadnAd.delegate = self;       // 設定delegate接收protocol回傳訊息
-        // 台灣地區請填TW 大陸則填CN
-        [vpadnAd setAdAutoRefresh:NO]; //如果為mediation則set NO
-        [vpadnAd setRootViewController:self]; //請將window的rootViewController設定在此 以便廣告順利執行
-    }
     
     
     //PreLabel
@@ -546,191 +493,12 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
 }
 
 
-#pragma mark VpadnAdDelegate method 接一般Banner廣告就需要新增
-- (void)onVpadnAdReceived:(UIView *)bannerView{
-    //NSLog(@"廣告抓取成功");
-}
-
-- (void)onVpadnAdFailed:(UIView *)bannerView didFailToReceiveAdWithError:(NSError *)error{
-    //NSLog(@"廣告抓取失敗");
-}
-
-- (void)onVpadnPresent:(UIView *)bannerView{
-    //NSLog(@"開啟vpadn廣告頁面 %@",bannerView);
-}
-
-- (void)onVpadnDismiss:(UIView *)bannerView{
-    //NSLog(@"關閉vpadn廣告頁面 %@",bannerView);
-}
-
-- (void)onVpadnLeaveApplication:(UIView *)bannerView{
-    //NSLog(@"離開publisher application");
-}
-
-#pragma mark VpadnInterstitial Delegate 有接Interstitial的廣告才需要新增
-- (void)onVpadnInterstitialAdReceived:(UIView *)bannerView{
-    //NSLog(@"插屏廣告抓取成功");
-    // 顯示插屏廣告
-    [vpadnInterstitial show];
-}
-
-- (void)onVpadnInterstitialAdFailed:(UIView *)bannerView{
-    //NSLog(@"插屏廣告抓取失敗");
-}
-
-- (void)onVpadnInterstitialAdDismiss:(UIView *)bannerView{
-    //NSLog(@"關閉插屏廣告頁面 %@",bannerView);
-}
-
-#pragma mark 通知關閉vpadn開屏廣告
-- (void)onVpadnSplashAdDismiss{
-    //NSLog(@"關閉vpadn開屏廣告頁面");
-}
-
-
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-
-
-- (void)getIPLocation{
-    NSMutableURLRequest *requestHTTP = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://ip-api.com/json"]
-                                                               cachePolicy:NSURLRequestReloadIgnoringCacheData  timeoutInterval:10];
-    
-    [requestHTTP setHTTPMethod:@"GET"];
-    [requestHTTP setValue: @"text/json" forHTTPHeaderField:@"Accept"];
-    
-    AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:requestHTTP];
-    op.responseSerializer = [AFJSONResponseSerializer serializer];
-    [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        //NSLog(@"IP response: %@ ",responseObject);
-        NSString *myIP = [responseObject valueForKey:@"query"];
-        [self setLocation:(NSDictionary*)responseObject];
-        //NSLog(@"IP: %@", myIP);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", [error localizedDescription]);
-        
-    }];
-    [op start];
-}
-
-- (void)setLocation:(NSDictionary*)respDict{
-    /*
-     as = "AS4812 China Telecom (Group)";
-     city = Shanghai;
-     country = China;
-     countryCode = CN;
-     isp = "shanghai science and technology network communicat";
-     lat = "31.0456";
-     lon = "121.3997";
-     org = "shanghai science and technology network communicat";
-     query = "210.14.66.179";
-     region = 31;
-     regionName = "Shanghai Shi";
-     status = success;
-     timezone = "Asia/Shanghai";
-     zip = "";
-     
-     */
-    //NSLog(@"IP from Area: %@",[respDict valueForKey:@"countryCode"]);
-    region = [respDict valueForKey:@"countryCode"];
-    vpadnAd.platform = region;
-    if (showAds) {
-        if(region) {
-            //        NSLog(@"region is %@",region);
-            if ([region isEqualToString:@"TW"]) {
-                [self.view addSubview:[vpadnAd getVpadnAdView]]; // 將VpadnBanner的View加入此ViewController中
-                [vpadnAd startGetAd:[self getTestIdentifiers]]; // 開始抓取Banner廣告
-                // Show 全幅廣告
-                [self addInterstitialAds:NO];
-            }
-            else {
-                [interstitial loadRequest:grequest2];
-                [gADBannerView loadRequest:grequest];
-                [gADBannerView setHidden:NO];
-                [self addInterstitialAds:YES];
-            }
-        }
-        else {
-            if (areaCode != 3) {
-                [interstitial loadRequest:grequest2];
-                [gADBannerView loadRequest:grequest];
-                [gADBannerView setHidden:NO];
-                [self addInterstitialAds:YES];
-            }
-            else {
-                [self.view addSubview:[vpadnAd getVpadnAdView]]; // 將VpadnBanner的View加入此ViewController中
-                [vpadnAd startGetAd:[self getTestIdentifiers]]; // 開始抓取Banner廣告
-                [self addInterstitialAds:NO];
-            }
-        }
-    }
-}
-
-- (void)addInterstitialAds:(bool)isGoogleAD{
-    if(isGoogleAD == YES){
-        [NSTimer
-         scheduledTimerWithTimeInterval:20.0
-         target:self
-         selector:@selector(addGInterAd)
-         userInfo:nil
-         repeats:NO];
-    
-        [NSTimer
-         scheduledTimerWithTimeInterval:60.0
-         target:self
-         selector:@selector(addGInterAd)
-         userInfo:nil
-         repeats:YES];
-    }else{
-        [NSTimer
-         scheduledTimerWithTimeInterval:20.0
-         target:self
-         selector:@selector(addVInterAd)
-         userInfo:nil
-         repeats:NO];
-        
-        [NSTimer
-         scheduledTimerWithTimeInterval:60.0
-         target:self
-         selector:@selector(addVInterAd)
-         userInfo:nil
-         repeats:YES];
-    }
-
-}
-
-
-- (void)addVInterAd{
-    vpadnInterstitial = [[VpadnInterstitial alloc] init];
-    vpadnInterstitial.strBannerId = vponIDAll;   // 填入您的Interstitial BannerId
-    vpadnInterstitial.platform = region;       // 台灣地區請填TW 大陸則填CN
-    vpadnInterstitial.delegate = self;
-    [vpadnInterstitial getInterstitial:[self getTestIdentifiers]];
-}
-
-- (void)addGInterAd{
-    interstitial = [[GADInterstitial alloc] initWithAdUnitID:AdmobIDAll];
-    
-    GADRequest *request2 = [GADRequest request];
-    // Requests test ads on test devices.
-    request2.testDevices = @[
-                             kGADSimulatorID,
-                             kDFPSimulatorID,
-                             ];
-    [interstitial loadRequest:request2];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-        if ([interstitial isReady]) {
-            [interstitial presentFromRootViewController:self];
-        }
-        //NSLog(@"is ready %d", [interstitial isReady]);
-    });
-}
 
 
 - (double)memoryBytesFree
