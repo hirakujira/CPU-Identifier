@@ -220,6 +220,9 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     boardIDLabelPre.textAlignment = NSTextAlignmentRight;
     boardIDLabelPre.translatesAutoresizingMaskIntoConstraints = NO;
     
+    boardIDLabelPre.hidden = YES;
+    boardIDLabel.hidden = YES;
+    
     manuPre.text = @"Manufactory:";
     manuPre.textAlignment = NSTextAlignmentRight;
     manuPre.translatesAutoresizingMaskIntoConstraints = NO;
@@ -418,7 +421,7 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
     [mainScrollView addConstraint:[NSLayoutConstraint constraintWithItem:linkButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:200.0f]];
     [linkButton addTarget:self action:@selector(buttonPressed) forControlEvents:UIControlEventTouchUpInside];
 
-    NSString *urlString = @"http://demo.hiraku.tw/CPUIdentifier/chart-store.php";
+    NSString *urlString = @"http://demo.hiraku.tw/CPUIdentifier/chart-storev101.php";
     //urlString = @"http://demo.hiraku.tw/CPUIdentifier/region/TA.php";
     NSURL *url_demo = [NSURL URLWithString:urlString];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url_demo];
@@ -489,7 +492,7 @@ static CFStringRef (*$MGCopyAnswer)(CFStringRef);
 
 
 - (void)buttonPressed {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://demo.hiraku.tw/CPUIdentifier/chart2-store.php"]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://demo.hiraku.tw/CPUIdentifier/chart2-storev101.php"]];
 }
 
 
